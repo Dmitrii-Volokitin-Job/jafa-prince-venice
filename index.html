@@ -54,7 +54,7 @@ h2{font:700 clamp(26px,5vw,40px)/1.1 Fraunces,serif;margin-bottom:14px}
 @media(max-width:720px){.floors{grid-template-columns:1fr}}
 .floorcard{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px}
 .floorcard h3{font-size:13px;text-transform:uppercase;letter-spacing:.14em;color:var(--mute);margin-bottom:8px;display:flex;justify-content:space-between}
-svg.plan{width:100%;height:auto;display:block;touch-action:manipulation}
+svg.plan{width:100%;height:auto;aspect-ratio:300/520;display:block;touch-action:manipulation}
 .plan .rm{fill:#26211d;stroke:#6b5f55;stroke-width:1.2;cursor:pointer;transition:fill .2s}
 .plan .rm:hover,.plan .rm.on{fill:#3d342d}
 .plan .rm.seen{fill:#2c2a24}
@@ -110,7 +110,7 @@ svg.plan{width:100%;height:auto;display:block;touch-action:manipulation}
 .card{background:var(--panel);border-radius:14px;overflow:hidden;text-align:left;border:1px solid var(--line);transition:transform .2s,border-color .2s;display:flex;flex-direction:column}
 .card:hover{transform:translateY(-3px);border-color:#6b5f55}
 .thumb{aspect-ratio:4/3;width:100%;object-fit:cover;background:#222}
-.ph{aspect-ratio:4/3;display:flex;flex-direction:column;justify-content:space-between;padding:14px;position:relative;overflow:hidden}
+.ph{aspect-ratio:2/1;display:flex;flex-direction:column;justify-content:space-between;padding:14px;position:relative;overflow:hidden}
 .ph .big{font:900 34px/1 Archivo;opacity:.9}
 .ph .ic{font-size:12px;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
 .ph:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(115deg,transparent 0 14px,rgba(255,255,255,.04) 14px 15px)}
@@ -310,7 +310,7 @@ const FIRST = [
 const FIRST_SOLID=[{x:18,y:436,w:182,h:74}];
 function roomArtists(id){ const s=new Set(H.works.filter(w=>w.room===id).map(w=>w.artist)); return s; }
 function plan(rooms,solid,floor,cur,small){
-  let s=`<svg class="plan" viewBox="0 0 300 ${floor==='ground'?520:520}" role="img" aria-label="${floor} floor plan">
+  let s=`<svg class="plan" width="300" height="520" viewBox="0 0 300 520" role="img" aria-label="${floor} floor plan">
   <defs><pattern id="waves" width="16" height="8" patternUnits="userSpaceOnUse"><rect width="16" height="8" fill="#16242e"/><path d="M0 5 Q4 1 8 5 T16 5" stroke="#2f5670" fill="none"/></pattern></defs>
   <rect class="water" x="0" y="0" width="300" height="34"/><text class="wl" x="150" y="22">Grand Canal</text>`;
   if(floor==='ground') s+=`<path d="M112 34 v6 M188 34 v6" stroke="#6b5f55"/><text class="sub" x="150" y="270" style="fill:#6b5f55">STAIRS</text><rect x="128" y="210" width="44" height="110" fill="none" stroke="#3d352f" stroke-dasharray="3 3"/>
@@ -346,7 +346,7 @@ function ph(w,big){
   const c=COL[w.artist];
   const isVid=/video|film/i.test(w.medium);
   return `<div class="ph" style="background:linear-gradient(135deg,${w.artist==='AJ'?'#1a2a4d,#0d1220':w.artist==='RP'?'#4a2410,#1a0f08':'#2a2622,#141210'})">
-    <span class="ic" style="color:${c}">${isVid?'▶ video':w.virtual?'◇ not in Venice':'no photo'}</span>
+    <span class="ic" style="color:${c}">${isVid?'▶ video':w.virtual?'◇ not in Venice':'not photographed · tap for the story'}</span>
     <span class="big">${esc(w.year)}</span></div>`;
 }
 function card(w){
