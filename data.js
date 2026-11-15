@@ -122,7 +122,7 @@ window.HS = {
       concept: "Prince drew in a book of Willem de Kooning's sketches for his 'Woman' paintings. He collaged male body parts onto the female figures, enlarged the pages onto canvas and painted over them. The results are intersex, orgiastic monsters that ignore the rules of the binary.",
       photos: ["dekooning-1", "dekooning-2"], themes: ["monster", "desire"], related: ["duffy", "itsallover", "graduation"] },
     { id: "whitealbum", clips: [{ src: "media/room9-clip.mp4", poster: "media/room9-clip-poster.jpg", cap: "Filmed in the show, from the first-floor rooms. We think it is The White Album (room 9), but not certain." }], yt: { q: "Arthur Jafa The White Album 2018", official: [["Google Arts & Culture · Biennale of Sydney", "https://artsandculture.google.com/asset/the-white-album-arthur-jafa/TAHEvt8sw98YhQ"], ["Screen Slate essay", "https://www.screenslate.com/articles/arthur-jafas-white-album"]] }, room: "9", artist: "AJ", title: "The White Album", year: "2018",
-      medium: "Video, about 40 minutes",
+      medium: "Video, about 30 minutes",
       concept: "After a decade of films about Black life, Jafa turned the camera on whiteness. He used CCTV, YouTube confessions, a gun-toting monologue and portraits of friends. It won the Golden Lion at the 2019 Venice Biennale, so this is a homecoming of sorts.",
       photos: [], themes: ["history", "grid", "music"], related: ["lovemessage", "iknowthisguy", "bengazarra"] },
     { id: "iknowthisguy", room: "9", artist: "RP", title: "I Know This Guy · Future · Untitled", year: "1980 · 1992 · 1990", count: "3 works",

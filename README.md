@@ -6,7 +6,8 @@ built from photos taken in the exhibition on 15 November 2026.
 
 - Clickable floor plans of both floors (after the booklet plans), with visited rooms tracked
 - 16 real rooms + **Room 17**, an imagined virtual annex of works not shown in Venice
-- 43 works, each with a short concept, medium, photos and "in dialogue with" links
+- 43 works, each with a concept, a researched history & context note, medium, photos and "in dialogue with" links
+- Russian (default) and English, switchable in the header; texts in `i18n.js`
 - 11 thematic threads (cars & the road, monstrosity, protest, the burning sun, …)
 - Notes on the palazzo itself
 
@@ -20,4 +21,5 @@ Rooms 9, 12 and 16 include short clips filmed in the show (`media/`). Every vide
 museum pages. Full Jafa videos aren't officially on YouTube, so nothing pirated is embedded.
 
 ## Deploy (GitHub Pages)
-Deployed automatically by `.github/workflows/pages.yml` to https://dmitrii-volokitin-job.github.io/jafa-prince-venice/
+Static files only, no build. Push to a public repo and enable
+Settings → Pages → "Deploy from a branch" → `main` / root.
