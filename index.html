@@ -54,7 +54,8 @@ h2{font:700 clamp(26px,5vw,40px)/1.1 Fraunces,serif;margin-bottom:14px}
 @media(max-width:720px){.floors{grid-template-columns:1fr}}
 .floorcard{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px}
 .floorcard h3{font-size:13px;text-transform:uppercase;letter-spacing:.14em;color:var(--mute);margin-bottom:8px;display:flex;justify-content:space-between}
-svg.plan{width:100%;height:auto;aspect-ratio:300/520;display:block;touch-action:manipulation}
+.planbox{position:relative;width:100%;padding-top:173.334%;overflow:hidden}
+svg.plan{position:absolute;top:0;left:0;width:100%;height:100%;display:block;touch-action:manipulation}
 .plan .rm{fill:#26211d;stroke:#6b5f55;stroke-width:1.2;cursor:pointer;transition:fill .2s}
 .plan .rm:hover,.plan .rm.on{fill:#3d342d}
 .plan .rm.seen{fill:#2c2a24}
@@ -99,8 +100,11 @@ svg.plan{width:100%;height:auto;aspect-ratio:300/520;display:block;touch-action:
 .tag{display:inline-block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:700}
 .room-intro{font:400 19px/1.55 Fraunces,serif;color:#eee5da;max-width:760px;clear:both;padding-top:6px}
 .roomgrid{display:grid;grid-template-columns:260px 1fr;gap:26px;margin-top:22px}
-@media(max-width:820px){.roomgrid{grid-template-columns:1fr}.mini{position:static;max-width:200px;margin:0 auto}}
-.mini{position:sticky;top:70px;align-self:start}
+@media(max-width:820px){.roomgrid{grid-template-columns:1fr}.mini{position:static;width:100%;max-width:220px;margin:0 auto}}
+.mini{position:sticky;top:70px;align-self:start;width:100%}
+.roomgrid>*{min-width:0}
+.strip>div{flex:0 0 auto;max-width:88vw}
+.strip>div video{max-width:88vw;height:min(58vh,440px)}
 .strip{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px;margin:18px 0 6px}
 .strip img,.strip video{height:min(58vh,440px);width:auto;border-radius:12px;scroll-snap-align:start;cursor:zoom-in;flex:0 0 auto;background:#000}
 .strip video{cursor:auto}
@@ -310,7 +314,7 @@ const FIRST = [
 const FIRST_SOLID=[{x:18,y:436,w:182,h:74}];
 function roomArtists(id){ const s=new Set(H.works.filter(w=>w.room===id).map(w=>w.artist)); return s; }
 function plan(rooms,solid,floor,cur,small){
-  let s=`<svg class="plan" width="300" height="520" viewBox="0 0 300 520" role="img" aria-label="${floor} floor plan">
+  let s=`<div class="planbox"><svg class="plan" viewBox="0 0 300 520" preserveAspectRatio="xMidYMid meet" role="img" aria-label="${floor} floor plan">
   <defs><pattern id="waves" width="16" height="8" patternUnits="userSpaceOnUse"><rect width="16" height="8" fill="#16242e"/><path d="M0 5 Q4 1 8 5 T16 5" stroke="#2f5670" fill="none"/></pattern></defs>
   <rect class="water" x="0" y="0" width="300" height="34"/><text class="wl" x="150" y="22">Grand Canal</text>`;
   if(floor==='ground') s+=`<path d="M112 34 v6 M188 34 v6" stroke="#6b5f55"/><text class="sub" x="150" y="270" style="fill:#6b5f55">STAIRS</text><rect x="128" y="210" width="44" height="110" fill="none" stroke="#3d352f" stroke-dasharray="3 3"/>
@@ -325,7 +329,7 @@ function plan(rooms,solid,floor,cur,small){
     ['AJ','RP'].forEach(k=>{ if(a.has(k)){ s+=`<circle class="dot" cx="${dx}" cy="${r.y+9}" r="3.4" fill="${k==='AJ'?'#4f7fe0':'#e2752d'}"/>`; dx+=9; }});
     s+=`</g>`;
   });
-  return s+`</svg>`;
+  return s+`</svg></div>`;
 }
 function drawPlans(){
   $('#planG').innerHTML=plan(GROUND,GROUND_SOLID,'ground');
