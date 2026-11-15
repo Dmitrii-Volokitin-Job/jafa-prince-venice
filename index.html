@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Helter Skelter — a virtual visit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;900&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;1,9..144,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0f0d0c; --panel:#191614; --panel2:#221e1b; --ink:#f1ebe3; --mute:#a59c92; --line:#3a332e;
+  --aj:#4f7fe0; --rp:#e2752d; --ot:#9a9188; --gold:#c9a45c;
+  --sat:env(safe-area-inset-top,0px); --sab:env(safe-area-inset-bottom,0px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.55 Archivo,system-ui,sans-serif;-webkit-font-smoothing:antialiased;padding-top:var(--sat)}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+img{display:block;max-width:100%}
+.serif{font-family:Fraunces,Georgia,serif}
+.wrap{max-width:1100px;margin:0 auto;padding:0 18px}
+
+/* top bar */
+.bar{position:sticky;top:0;z-index:30;background:rgba(15,13,12,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar .wrap{display:flex;align-items:center;gap:12px;height:54px}
+.logo{font-weight:900;letter-spacing:.02em;text-transform:uppercase;font-size:15px;white-space:nowrap;cursor:pointer}
+.logo span{color:var(--rp)} .logo i{color:var(--aj);font-style:normal}
+.bar .sp{flex:1}
+.pill{border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:13px;white-space:nowrap}
+.pill:hover{border-color:var(--ink)}
+.prog{font-size:12px;color:var(--mute);white-space:nowrap}
+
+/* hero */
+.hero{position:relative;min-height:78vh;display:flex;align-items:flex-end;overflow:hidden}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.55) saturate(.9);transform:scale(1.04);animation:drift 30s ease-in-out infinite alternate}
+@keyframes drift{to{transform:scale(1.12) translateY(-2%)}}
+.hero .wrap{position:relative;padding-bottom:48px;padding-top:120px}
+.kicker{text-transform:uppercase;letter-spacing:.18em;font-size:12px;color:var(--gold);font-weight:700}
+h1{font:900 clamp(48px,11vw,128px)/.9 Archivo;text-transform:uppercase;letter-spacing:-.02em;margin:10px 0 14px}
+h1 .a{color:var(--aj)} h1 .b{color:var(--rp)}
+.hero p{max-width:620px;font-size:18px;color:#e6ded4}
+.cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.btn{background:var(--ink);color:#111;padding:12px 20px;border-radius:999px;font-weight:700}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--ink)}
+.btn:active{transform:scale(.97)}
+
+section{padding:56px 0;border-bottom:1px solid var(--line)}
+h2{font:700 clamp(26px,5vw,40px)/1.1 Fraunces,serif;margin-bottom:14px}
+.lead{color:var(--mute);max-width:720px;margin-bottom:24px}
+
+/* plan */
+.floors{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:720px){.floors{grid-template-columns:1fr}}
+.floorcard{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px}
+.floorcard h3{font-size:13px;text-transform:uppercase;letter-spacing:.14em;color:var(--mute);margin-bottom:8px;display:flex;justify-content:space-between}
+svg.plan{width:100%;height:auto;display:block;touch-action:manipulation}
+.plan .rm{fill:#26211d;stroke:#6b5f55;stroke-width:1.2;cursor:pointer;transition:fill .2s}
+.plan .rm:hover,.plan .rm.on{fill:#3d342d}
+.plan .rm.seen{fill:#2c2a24}
+.plan .rm.cur{fill:var(--rp);fill-opacity:.35;stroke:var(--rp);stroke-width:2}
+.plan .rm.dim{opacity:.25}
+.plan .solid{fill:#171412;stroke:#3d352f}
+.plan .lbl{font:700 15px Archivo;fill:var(--ink);pointer-events:none;text-anchor:middle;dominant-baseline:middle}
+.plan .sub{font:500 7.5px Archivo;fill:var(--mute);pointer-events:none;text-anchor:middle;letter-spacing:.05em}
+.plan .water{fill:url(#waves)}
+.plan .wl{font:italic 400 10px Fraunces;fill:#9cc0d9;text-anchor:middle;letter-spacing:.1em}
+.plan .dot{pointer-events:none}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--mute);margin-top:10px}
+.legend b{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:-1px}
+
+/* building */
+.bld{display:grid;grid-template-columns:1.1fr 1fr;gap:24px;align-items:start}
+@media(max-width:820px){.bld{grid-template-columns:1fr}}
+.bld img{border-radius:14px;width:100%;aspect-ratio:3/4;object-fit:cover;cursor:zoom-in}
+.facts li{list-style:none;padding:12px 0;border-top:1px solid var(--line);color:#ddd4ca}
+.facts li:first-child{border-top:0}
+.bld .pics{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+/* threads */
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);border-radius:999px;padding:7px 13px 7px 10px;font-size:13px;display:inline-flex;align-items:center;gap:7px;background:var(--panel)}
+.chip i{width:9px;height:9px;border-radius:50%;display:inline-block}
+.chip:hover{border-color:var(--ink)}
+.chip.sm{padding:4px 10px 4px 8px;font-size:12px}
+
+/* artists */
+.artists{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:720px){.artists{grid-template-columns:1fr}}
+.artist{background:var(--panel);border-radius:16px;padding:20px;border-top:4px solid}
+.artist h3{font:700 24px Fraunces}
+.artist .yrs{color:var(--mute);font-size:13px;margin-bottom:10px}
+
+/* room view */
+#room{display:none}
+.room-head{padding:28px 0 8px}
+.rnum{font:900 clamp(64px,16vw,140px)/.85 Archivo;color:transparent;-webkit-text-stroke:1.5px var(--ink);float:right;margin-left:12px}
+.room-head h2{margin:6px 0 6px}
+.tag{display:inline-block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:700}
+.room-intro{font:400 19px/1.55 Fraunces,serif;color:#eee5da;max-width:760px;clear:both;padding-top:6px}
+.roomgrid{display:grid;grid-template-columns:260px 1fr;gap:26px;margin-top:22px}
+@media(max-width:820px){.roomgrid{grid-template-columns:1fr}.mini{position:static;max-width:200px;margin:0 auto}}
+.mini{position:sticky;top:70px;align-self:start}
+.strip{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px;margin:18px 0 6px}
+.strip img,.strip video{height:min(58vh,440px);width:auto;border-radius:12px;scroll-snap-align:start;cursor:zoom-in;flex:0 0 auto;background:#000}
+.strip video{cursor:auto}
+.strip::-webkit-scrollbar{height:4px}.strip::-webkit-scrollbar-thumb{background:var(--line)}
+.vcap{font-size:12px;color:var(--mute)}
+.works{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-top:20px}
+.card{background:var(--panel);border-radius:14px;overflow:hidden;text-align:left;border:1px solid var(--line);transition:transform .2s,border-color .2s;display:flex;flex-direction:column}
+.card:hover{transform:translateY(-3px);border-color:#6b5f55}
+.thumb{aspect-ratio:4/3;width:100%;object-fit:cover;background:#222}
+.ph{aspect-ratio:4/3;display:flex;flex-direction:column;justify-content:space-between;padding:14px;position:relative;overflow:hidden}
+.ph .big{font:900 34px/1 Archivo;opacity:.9}
+.ph .ic{font-size:12px;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
+.ph:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(115deg,transparent 0 14px,rgba(255,255,255,.04) 14px 15px)}
+.card .meta{padding:12px 14px 14px}
+.who{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700}
+.who.AJ{color:var(--aj)}.who.RP{color:var(--rp)}.who.OT{color:var(--ot)}
+.card h4{font:700 17px/1.25 Fraunces;margin:4px 0 2px}
+.card .yr{font-size:13px;color:var(--mute)}
+.roomnav{display:flex;justify-content:space-between;gap:10px;margin:34px 0 10px}
+.roomnav button{flex:1;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;text-align:left}
+.roomnav button:last-child{text-align:right}
+.roomnav small{display:block;color:var(--mute);font-size:12px}
+.roomnav button:disabled{opacity:.3}
+.virtual-note{border:1px dashed var(--gold);color:#e9d9b4;padding:12px 14px;border-radius:12px;margin-top:16px;font-size:14px}
+
+/* modal */
+.modal{position:fixed;inset:0;z-index:50;background:rgba(5,4,4,.82);backdrop-filter:blur(6px);display:none;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.modal.open{display:block;animation:fade .25s}
+@keyframes fade{from{opacity:0}}
+.sheet{max-width:880px;margin:5vh auto;background:var(--panel);border-radius:20px;overflow:hidden;border:1px solid var(--line)}
+@media(max-width:720px){.sheet{margin:0;border-radius:0;min-height:100vh;padding-bottom:var(--sab)}}
+.sheet .gal{position:relative;background:#000}
+.sheet .gal img{width:100%;max-height:66vh;object-fit:contain;cursor:zoom-in}
+.sheet .gal .ph{aspect-ratio:16/7}
+.gnav{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;background:rgba(0,0,0,.55);font-size:20px}
+.gnav.l{left:10px}.gnav.r{right:10px}
+.gdots{position:absolute;bottom:10px;left:0;right:0;display:flex;justify-content:center;gap:6px}
+.gdots i{width:7px;height:7px;border-radius:50%;background:#fff;opacity:.35}.gdots i.on{opacity:1}
+.close{position:absolute;top:calc(10px + var(--sat));right:10px;z-index:3;width:40px;height:40px;border-radius:50%;background:rgba(0,0,0,.6);font-size:22px}
+.sbody{padding:22px 22px 28px}
+.sbody h3{font:700 clamp(24px,4.5vw,34px)/1.15 Fraunces;margin:6px 0 4px}
+.sbody .yr{color:var(--mute)}
+.sbody .med{font-size:13px;color:var(--mute);margin:10px 0 16px;padding-left:10px;border-left:2px solid var(--line)}
+.sbody .concept{font:400 18px/1.6 Fraunces,serif;color:#efe6db}
+.sbody h5{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin:24px 0 10px}
+.rel{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.rel .card h4{font-size:14px}
+.rel .thumb,.rel .ph{aspect-ratio:3/2}
+.rel .ph .big{font-size:22px}
+.ext{display:inline-block;margin-top:14px;color:var(--gold)}
+.inroom{display:inline-block;margin-top:8px;font-size:13px;color:var(--mute);text-decoration:underline;cursor:pointer}
+
+/* lightbox */
+.lb{position:fixed;inset:0;z-index:60;background:#000;display:none;align-items:center;justify-content:center}
+.lb.open{display:flex}
+.lb img{max-width:100vw;max-height:100vh;object-fit:contain;touch-action:pinch-zoom}
+
+/* gate */
+.gate{position:fixed;inset:0;z-index:80;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:24px}
+.gate div{max-width:440px}
+.gate h2{margin-bottom:10px}
+.gate p{color:var(--mute);margin-bottom:20px}
+
+/* thread view */
+#thread{display:none;padding-bottom:40px}
+.foot{padding:30px 0 calc(40px + var(--sab));color:var(--mute);font-size:13px}
+.foot a{color:var(--mute)}
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+
+<div class="gate" id="gate">
+  <div>
+    <div class="kicker">Before you enter</div>
+    <h2 class="serif">Some works are explicit</h2>
+    <p>Like the exhibition itself, this visit includes scenes of racial violence, nudity and sexual imagery. The exhibition advises adults to think about this before visiting with minors.</p>
+    <button class="btn" id="enter">Enter the palazzo</button>
+  </div>
+</div>
+
+<header class="bar"><div class="wrap">
+  <div class="logo" onclick="go('')">Helter <span>Skel</span><i>ter</i></div>
+  <div class="sp"></div>
+  <span class="prog" id="prog"></span>
+  <button class="pill" onclick="go('map')">Map</button>
+</div></header>
+
+<main id="home">
+  <div class="hero">
+    <img src="img/portego-viriconium.jpg" alt="The frescoed portego with Arthur Jafa's cutout installation">
+    <div class="wrap">
+      <div class="kicker">Fondazione Prada · Venice · 9 May – 23 Nov 2026</div>
+      <h1>Helter<br>Skelter</h1>
+      <p><b style="color:var(--aj)">Arthur Jafa</b> &amp; <b style="color:var(--rp)">Richard Prince</b>: two appropriation artists, born a decade apart, in one 18th-century palazzo on the Grand Canal. Walk it room by room, open any work and follow the threads between them.</p>
+      <div class="cta">
+        <button class="btn" onclick="go('room-1')">Start the tour →</button>
+        <button class="btn ghost" onclick="go('map')">Open the floor plan</button>
+      </div>
+    </div>
+  </div>
+
+  <section id="map"><div class="wrap">
+    <div class="kicker">Floor plan</div>
+    <h2>Tap a room to walk in</h2>
+    <p class="lead">Drawn after the plans in the exhibition booklet. The Grand Canal is at the top. You come in from the side calle on the ground floor, cross the courtyard, then climb to the piano nobile. Visited rooms darken.</p>
+    <div class="floors">
+      <div class="floorcard"><h3><span>Ground floor</span><span>Rooms 1–6</span></h3><div id="planG"></div></div>
+      <div class="floorcard"><h3><span>First floor · piano nobile</span><span>Rooms 7–16</span></h3><div id="planF"></div></div>
+    </div>
+    <div class="legend"><span><b style="background:var(--aj)"></b>Jafa work in room</span><span><b style="background:var(--rp)"></b>Prince work in room</span><span><button class="chip sm" onclick="go('room-17')"><i style="background:var(--gold)"></i>+ Room 17 · virtual extension</button></span></div>
+  </div></section>
+
+  <section><div class="wrap">
+    <div class="kicker">Threads</div>
+    <h2>Follow an obsession through the house</h2>
+    <p class="lead">The show works by pairing: a Jafa next to a Prince, each lighting up the other. Pick a theme to see every work that shares it, across both floors and the virtual room.</p>
+    <div class="chips" id="themechips"></div>
+  </div></section>
+
+  <section id="building"><div class="wrap bld">
+    <div class="pics">
+      <img src="img/androne-view.jpg" alt="Looking down into the androne with Big Wheel II" data-lb>
+      <img src="img/portego-chopper.jpg" alt="The portego with Prince's chopper" data-lb>
+    </div>
+    <div>
+      <div class="kicker">The place</div>
+      <h2>Ca' Corner della Regina</h2>
+      <p class="lead" style="margin-bottom:8px">Santa Croce 2215, on the Grand Canal. Exhibition curated by Nancy Spector.</p>
+      <ul class="facts" id="facts"></ul>
+    </div>
+  </div></section>
+
+  <section><div class="wrap">
+    <div class="kicker">The artists</div>
+    <h2>Two stereoscopic eyes on America</h2>
+    <div class="artists">
+      <div class="artist" style="border-color:var(--aj)">
+        <h3>Arthur Jafa</h3><div class="yrs">b. 1960, Tupelo, Mississippi · lives in Los Angeles</div>
+        <p>Filmmaker, cinematographer (<i>Daughters of the Dust</i>) and artist. He builds montage out of found images of Black American life, aiming for a Black cinema with the power and beauty of Black music. Golden Lion, Venice Biennale 2019.</p>
+        <div class="chips" style="margin-top:12px" id="ajlist"></div>
+      </div>
+      <div class="artist" style="border-color:var(--rp)">
+        <h3>Richard Prince</h3><div class="yrs">b. 1949, Panama Canal Zone · lives in New York</div>
+        <p>Started rephotographing ads in 1977, working "without a licence." Cowboys, biker girlfriends, jokes, nurses and Instagram posts: he collects what American culture throws away and blows it up into art, which has led to famous court cases.</p>
+        <div class="chips" style="margin-top:12px" id="rplist"></div>
+      </div>
+    </div>
+  </div></section>
+</main>
+
+<main id="room"><div class="wrap" id="roomwrap"></div></main>
+<main id="thread"><div class="wrap" id="threadwrap"></div></main>
+
+<div class="modal" id="modal"><div class="sheet" id="sheet"></div></div>
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
+
+<footer class="foot"><div class="wrap">
+  A personal virtual visit made from photos taken in the exhibition on 15 November 2026. Work concepts are summaries written for this site, not the gallery's wall texts. Room 17 is imaginary: it gathers related works that are not in the show.
+  Exhibition: “Helter Skelter: Arthur Jafa and Richard Prince”, curated by Nancy Spector, Fondazione Prada, Ca' Corner della Regina, Venice.
+</div></footer>
+
+<script src="data.js"></script>
+<script>
+const H = window.HS;
+const W = Object.fromEntries(H.works.map(w=>[w.id,w]));
+const R = Object.fromEntries(H.rooms.map(r=>[r.id,r]));
+const order = H.rooms.map(r=>r.id);
+const $ = s=>document.querySelector(s);
+const A = {AJ:"Arthur Jafa",RP:"Richard Prince"};
+const COL = {AJ:"var(--aj)",RP:"var(--rp)",OT:"var(--ot)"};
+let seen = new Set();
+try{ seen = new Set(JSON.parse(localStorage.getItem('hs-seen')||'[]')) }catch(e){}
+function saveSeen(){ try{localStorage.setItem('hs-seen',JSON.stringify([...seen]))}catch(e){} }
+const esc = s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const who = w=> w.artistName || A[w.artist];
+
+/* gate */
+let gateOK=false; try{gateOK=localStorage.getItem('hs-gate')==='1'}catch(e){}
+if(gateOK) $('#gate').remove();
+else $('#enter').onclick=()=>{ try{localStorage.setItem('hs-gate','1')}catch(e){} $('#gate').remove(); };
+
+/* ---------- floor plans ---------- */
+const GROUND = [
+  {id:"4",x:18,y:44,w:74,h:88},{id:"2",x:98,y:44,w:104,h:150,sub:"ANDRONE"},{id:"3",x:208,y:44,w:74,h:88},
+  {id:"5",x:18,y:140,w:74,h:110},{id:"6",x:208,y:140,w:74,h:110},
+  {id:"1",x:106,y:340,w:88,h:170,sub:"COURTYARD"}
+];
+const GROUND_SOLID=[{x:18,y:256,w:74,h:70},{x:208,y:256,w:74,h:70},{x:18,y:340,w:82,h:170},{x:200,y:340,w:82,h:170}];
+const FIRST = [
+  {id:"16",x:18,y:44,w:76,h:96},{id:"15",x:18,y:146,w:76,h:96},{id:"14",x:18,y:248,w:76,h:96},{id:"13",x:18,y:350,w:76,h:80},
+  {id:"7",x:100,y:44,w:100,h:386,sub:"PORTEGO"},
+  {id:"9",x:206,y:44,w:76,h:86},{id:"8",x:206,y:136,w:76,h:86},{id:"10",x:206,y:228,w:76,h:96},{id:"11",x:206,y:330,w:76,h:80},{id:"12",x:206,y:416,w:76,h:94}
+];
+const FIRST_SOLID=[{x:18,y:436,w:182,h:74}];
+function roomArtists(id){ const s=new Set(H.works.filter(w=>w.room===id).map(w=>w.artist)); return s; }
+function plan(rooms,solid,floor,cur,small){
+  let s=`<svg class="plan" viewBox="0 0 300 ${floor==='ground'?520:520}" role="img" aria-label="${floor} floor plan">
+  <defs><pattern id="waves" width="16" height="8" patternUnits="userSpaceOnUse"><rect width="16" height="8" fill="#16242e"/><path d="M0 5 Q4 1 8 5 T16 5" stroke="#2f5670" fill="none"/></pattern></defs>
+  <rect class="water" x="0" y="0" width="300" height="34"/><text class="wl" x="150" y="22">Grand Canal</text>`;
+  if(floor==='ground') s+=`<path d="M112 34 v6 M188 34 v6" stroke="#6b5f55"/><text class="sub" x="150" y="270" style="fill:#6b5f55">STAIRS</text><rect x="128" y="210" width="44" height="110" fill="none" stroke="#3d352f" stroke-dasharray="3 3"/>
+  <text class="sub" x="10" y="333" style="text-anchor:start;fill:var(--gold)">▶ ENTRANCE</text>`;
+  solid.forEach(r=>s+=`<rect class="solid" x="${r.x}" y="${r.y}" width="${r.w}" height="${r.h}" rx="2"/>`);
+  rooms.forEach(r=>{
+    const cls=['rm']; if(seen.has(r.id))cls.push('seen'); if(cur===r.id)cls.push('cur');
+    s+=`<g onclick="go('room-${r.id}')" style="cursor:pointer"><rect class="${cls.join(' ')}" x="${r.x}" y="${r.y}" width="${r.w}" height="${r.h}" rx="3"><title>Room ${r.id} · ${esc(R[r.id].theme)}</title></rect>
+    <text class="lbl" x="${r.x+r.w/2}" y="${r.y+r.h/2-(r.sub?5:0)}">${r.id}</text>`;
+    if(r.sub) s+=`<text class="sub" x="${r.x+r.w/2}" y="${r.y+r.h/2+12}">${r.sub}</text>`;
+    const a=roomArtists(r.id); let dx=r.x+8;
+    ['AJ','RP'].forEach(k=>{ if(a.has(k)){ s+=`<circle class="dot" cx="${dx}" cy="${r.y+9}" r="3.4" fill="${k==='AJ'?'#4f7fe0':'#e2752d'}"/>`; dx+=9; }});
+    s+=`</g>`;
+  });
+  return s+`</svg>`;
+}
+function drawPlans(){
+  $('#planG').innerHTML=plan(GROUND,GROUND_SOLID,'ground');
+  $('#planF').innerHTML=plan(FIRST,FIRST_SOLID,'first');
+  const n=[...seen].filter(x=>x!=='17').length;
+  $('#prog').textContent = n? `${n}/16 rooms visited`:'';
+}
+
+/* ---------- home bits ---------- */
+$('#facts').innerHTML = H.building.facts.map(f=>`<li>${esc(f)}</li>`).join('');
+$('#themechips').innerHTML = Object.entries(H.themes).map(([k,t])=>`<button class="chip" onclick="go('thread-${k}')"><i style="background:${t.color}"></i>${esc(t.name)} <span style="color:var(--mute)">${H.works.filter(w=>w.themes.includes(k)).length}</span></button>`).join('');
+['AJ','RP'].forEach(k=>{
+  $('#'+k.toLowerCase()+'list').innerHTML = H.works.filter(w=>w.artist===k&&!w.virtual).map(w=>`<button class="chip sm" onclick="openWork('${w.id}')">${esc(w.title)}</button>`).join('');
+});
+
+/* ---------- cards ---------- */
+function ph(w,big){
+  const c=COL[w.artist];
+  const isVid=/video|film/i.test(w.medium);
+  return `<div class="ph" style="background:linear-gradient(135deg,${w.artist==='AJ'?'#1a2a4d,#0d1220':w.artist==='RP'?'#4a2410,#1a0f08':'#2a2622,#141210'})">
+    <span class="ic" style="color:${c}">${isVid?'▶ video':w.virtual?'◇ not in Venice':'no photo'}</span>
+    <span class="big">${esc(w.year)}</span></div>`;
+}
+function card(w){
+  const img = w.photos[0] ? `<img class="thumb" loading="lazy" src="img/${w.photos[0]}.jpg" alt="${esc(w.title)}">` : (w.video? `<img class="thumb" src="media/room12-poster.jpg" alt="">` : ph(w));
+  return `<button class="card" onclick="openWork('${w.id}')">${img}<div class="meta"><div class="who ${w.artist}">${esc(who(w))}${w.room!=='17'?' · room '+w.room:''}</div><h4>${esc(w.title)}</h4><div class="yr">${esc(w.year)}${w.count?' · '+w.count:''}</div></div></button>`;
+}
+
+/* ---------- room view ---------- */
+function showRoom(id){
+  const r=R[id]; if(!r) return go('');
+  seen.add(id); saveSeen();
+  const i=order.indexOf(id), prev=R[order[i-1]], next=R[order[i+1]];
+  const works=H.works.filter(w=>w.room===id);
+  const floorLbl = r.floor==='ground'?'Ground floor':r.floor==='first'?'First floor':'Virtual · not in the building';
+  const mini = r.floor==='ground'?plan(GROUND,GROUND_SOLID,'ground',id):r.floor==='first'?plan(FIRST,FIRST_SOLID,'first',id):
+    `<div class="virtual-note">Room 17 sits outside the palazzo. It's an imagined annex of works by the two artists that weren't shown in Venice, linked back to the rooms where their descendants hang.</div>`;
+  let strip = r.photos.map(p=>`<img src="img/${p}.jpg" alt="Room ${id}" data-lb loading="lazy">`).join('');
+  if(r.video) strip = `<div><video src="media/room12-clip.mp4" poster="media/room12-poster.jpg" controls playsinline preload="none"></video><div class="vcap">Clip filmed in the show, probably from <i>BEN GAZARRA</i></div></div>`+strip;
+  $('#roomwrap').innerHTML = `
+    <div class="room-head">
+      <div class="rnum">${id}</div>
+      <span class="tag">${floorLbl} · ${esc(r.theme)}</span>
+      <h2>${esc(r.name)}</h2>
+      <div style="color:var(--mute);font-size:14px">${works.length} work${works.length>1?'s':''} · ${[...roomArtists(id)].map(k=>`<b style="color:${COL[k]}">${A[k]||'Alfred Stieglitz'}</b>`).join(' & ')}</div>
+    </div>
+    <p class="room-intro">${esc(r.intro)}</p>
+    <div class="roomgrid">
+      <div class="mini">${mini}</div>
+      <div>
+        ${strip?`<div class="strip">${strip}</div>`:''}
+        <div class="works">${works.map(card).join('')}</div>
+      </div>
+    </div>
+    <div class="roomnav">
+      <button ${prev?'':'disabled'} onclick="go('room-${prev?prev.id:''}')"><small>← previous</small>${prev?esc(prev.name):''}</button>
+      <button ${next?'':'disabled'} onclick="go('room-${next?next.id:''}')"><small>next →</small>${next?esc(next.name):'End of the visit'}</button>
+    </div>`;
+  bindLB($('#roomwrap'));
+  view('room'); window.scrollTo(0,0); drawPlans();
+}
+
+/* ---------- thread view ---------- */
+function showThread(k){
+  const t=H.themes[k]; if(!t) return go('');
+  const ws=H.works.filter(w=>w.themes.includes(k)).sort((a,b)=>order.indexOf(a.room)-order.indexOf(b.room));
+  $('#threadwrap').innerHTML=`<div class="room-head"><span class="tag" style="color:${t.color}">Thread</span><h2>${esc(t.name)}</h2>
+  <p class="lead">${ws.length} works · ${ws.filter(w=>w.artist==='AJ').length} by Jafa, ${ws.filter(w=>w.artist==='RP').length} by Prince. Shown in walking order through the house.</p>
+  <div class="chips">${Object.entries(H.themes).map(([kk,tt])=>`<button class="chip sm" style="${kk===k?'border-color:'+tt.color:''}" onclick="go('thread-${kk}')"><i style="background:${tt.color}"></i>${esc(tt.name)}</button>`).join('')}</div></div>
+  <div class="works">${ws.map(card).join('')}</div>`;
+  view('thread'); window.scrollTo(0,0);
+}
+
+/* ---------- work modal ---------- */
+let gi=0, gphotos=[];
+function openWork(id){ const w=W[id]; if(!w) return; location.hash='work-'+id; }
+function renderWork(id){
+  const w=W[id]; if(!w) return;
+  gphotos=w.photos; gi=0;
+  const rel=w.related.map(r=>W[r]).filter(Boolean);
+  const gal = w.video ? `<video src="media/room12-clip.mp4" poster="media/room12-poster.jpg" controls playsinline style="width:100%;max-height:66vh;background:#000"></video>`
+    : gphotos.length ? `<img id="gimg" src="img/${gphotos[0]}.jpg" alt="${esc(w.title)}">${gphotos.length>1?`<button class="gnav l" onclick="gal(-1)">‹</button><button class="gnav r" onclick="gal(1)">›</button><div class="gdots">${gphotos.map((_,i)=>`<i class="${i?'':'on'}"></i>`).join('')}</div>`:''}`
+    : ph(w);
+  $('#sheet').innerHTML=`<div class="gal">${gal}</div>
+  <div class="sbody">
+    <div class="who ${w.artist}">${esc(who(w))}</div>
+    <h3>${esc(w.title)}</h3>
+    <div class="yr">${esc(w.year)}${w.count?' · '+w.count:''} · ${w.room==='17'?'Room 17 (virtual, not in Venice)':'Room '+w.room+(R[w.room].name.startsWith('Room')?'':' · '+esc(R[w.room].name))}</div>
+    <div class="med">${esc(w.medium)}</div>
+    <p class="concept">${esc(w.concept)}</p>
+    ${w.link?`<a class="ext" href="${w.link}" target="_blank" rel="noopener">Read more about it ↗</a><br>`:''}
+    ${w.room!=='17'?`<span class="inroom" onclick="go('room-${w.room}')">Walk into room ${w.room} →</span>`:''}
+    <h5>Threads</h5>
+    <div class="chips">${w.themes.map(k=>`<button class="chip sm" onclick="go('thread-${k}')"><i style="background:${H.themes[k].color}"></i>${esc(H.themes[k].name)}</button>`).join('')}</div>
+    <h5>In dialogue with</h5>
+    <div class="rel">${rel.map(card).join('')}</div>
+  </div>
+  <button class="close" onclick="closeWork()" aria-label="Close">×</button>`;
+  const gimg=$('#gimg'); if(gimg){ gimg.onclick=()=>lb(gimg.src); swipe($('#sheet .gal'),d=>gal(d)); }
+  $('#modal').classList.add('open'); $('#modal').scrollTop=0; document.body.style.overflow='hidden';
+}
+function gal(d){ if(gphotos.length<2)return; gi=(gi+d+gphotos.length)%gphotos.length; $('#gimg').src=`img/${gphotos[gi]}.jpg`; document.querySelectorAll('.gdots i').forEach((e,i)=>e.classList.toggle('on',i===gi)); }
+let backHash='';
+function closeWork(){ $('#modal').classList.remove('open'); document.body.style.overflow=''; if(location.hash.startsWith('#work-')) location.hash=backHash; }
+$('#modal').onclick=e=>{ if(e.target.id==='modal') closeWork(); };
+
+/* ---------- lightbox & swipe ---------- */
+function lb(src){ $('#lbimg').src=src; $('#lb').classList.add('open'); }
+$('#lb').onclick=()=>$('#lb').classList.remove('open');
+function bindLB(root){ root.querySelectorAll('[data-lb]').forEach(i=>i.onclick=()=>lb(i.src)); }
+bindLB(document);
+function swipe(el,cb){ let x0=null; el.addEventListener('touchstart',e=>{ x0 = e.target.closest('.strip,video,.plan') ? null : e.touches[0].clientX; },{passive:true});
+  el.addEventListener('touchend',e=>{ if(x0===null)return; const dx=e.changedTouches[0].clientX-x0; if(Math.abs(dx)>50) cb(dx<0?1:-1); x0=null; }); }
+
+/* ---------- routing ---------- */
+function view(v){ ['home','room','thread'].forEach(id=>$('#'+id).style.display = id===v?'block':'none'); }
+function go(h){ location.hash = h; if(!h){ route(); } }
+let curView='';
+function route(){
+  const h=location.hash.slice(1);
+  if(h.startsWith('work-')){ renderWork(h.slice(5)); if(!curView){ view('home'); curView='#'; } return; }
+  if($('#modal').classList.contains('open')){ $('#modal').classList.remove('open'); document.body.style.overflow=''; }
+  backHash=h; curView=h;
+  if(h.startsWith('room-')) return showRoom(h.slice(5));
+  if(h.startsWith('thread-')) return showThread(h.slice(7));
+  view('home'); drawPlans();
+  if(h==='map'||h==='building') setTimeout(()=>document.getElementById(h).scrollIntoView(),30); else window.scrollTo(0,0);
+}
+window.addEventListener('hashchange',route);
+document.addEventListener('keydown',e=>{
+  if($('#lb').classList.contains('open')){ if(e.key==='Escape')$('#lb').classList.remove('open'); return; }
+  if($('#modal').classList.contains('open')){ if(e.key==='Escape')closeWork(); if(e.key==='ArrowRight')gal(1); if(e.key==='ArrowLeft')gal(-1); return; }
+  const h=location.hash.slice(1);
+  if(h.startsWith('room-')){ const i=order.indexOf(h.slice(5));
+    if(e.key==='ArrowRight'&&order[i+1]) go('room-'+order[i+1]);
+    if(e.key==='ArrowLeft'&&order[i-1]) go('room-'+order[i-1]); }
+});
+swipe($('#room'),d=>{ const h=location.hash.slice(1); if(!h.startsWith('room-'))return; const i=order.indexOf(h.slice(5)); const n=order[i+d]; if(n) go('room-'+n); });
+route();
+</script>
+</body>
+</html>
