@@ -119,6 +119,9 @@ svg.plan{position:absolute;top:0;left:0;width:100%;height:100%;display:block;tou
 .ph{aspect-ratio:2/1;display:flex;flex-direction:column;justify-content:space-between;padding:14px;position:relative;overflow:hidden}
 .ph .big{font:900 34px/1 Archivo;opacity:.9}
 .ph .ic{font-size:12px;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
+.ph.cover{justify-content:space-between}.ph.cover .ic:empty{display:none}.ph.cover .ic{background:rgba(0,0,0,.55);color:#fff;align-self:flex-start;padding:4px 8px;border-radius:6px;position:relative;z-index:1}
+.cvtitle{font:700 22px/1.1 Fraunces,serif;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.8);position:relative;z-index:1}
+.cvyear{font-size:12px;color:#f1ebe3;letter-spacing:.08em;text-shadow:0 1px 6px rgba(0,0,0,.9);position:relative;z-index:1}
 .ph:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(115deg,transparent 0 14px,rgba(255,255,255,.04) 14px 15px)}
 .card .meta{padding:12px 14px 14px}
 .who{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700}
@@ -151,6 +154,7 @@ svg.plan{position:absolute;top:0;left:0;width:100%;height:100%;display:block;tou
 .sbody .yr{color:var(--mute)}
 .sbody .med{font-size:13px;color:var(--mute);margin:10px 0 4px;padding-left:10px;border-left:2px solid var(--line)}
 .sbody .concept{font:400 18px/1.6 Fraunces,serif;color:var(--ink)}
+.sbody .looktext{font-size:16px;line-height:1.65;color:var(--text2)}
 .sbody .bgtext{font-size:15px;line-height:1.65;color:var(--text2);border-left:2px solid var(--gold);padding-left:12px}
 .sbody h5{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin:24px 0 10px}
 .rel{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
@@ -297,6 +301,7 @@ svg.plan{position:absolute;top:0;left:0;width:100%;height:100%;display:block;tou
 
 <script src="data.js"></script>
 <script src="i18n.js"></script>
+<script src="look.js"></script>
 <script>
 const H = window.HS;
 const W = Object.fromEntries(H.works.map(w=>[w.id,w]));
@@ -342,10 +347,10 @@ const EN = {
   clipBadge:"▶ my clip", ytBadge:"▶ YouTube", ytMore:"YouTube & more",
   phVideo:"▶ video", phVirtual:"◇ not in Venice", phNone:"not photographed · tap for the story", langBtn:"RU",
   nameAJ:"Arthur Jafa", nameRP:"Richard Prince",
-  concept:"Concept", imgSearch:"See images of this work online ↗",
+  concept:"Concept", look:"How to look", imgSearch:"See images of this work online ↗",
   pCanal:"Grand Canal", pStairs:"STAIRS", pEntrance:"ENTRANCE", p_ANDRONE:"ANDRONE", p_COURTYARD:"COURTYARD", p_PORTEGO:"PORTEGO"
 };
-const RUX = {concept:"Концепция", imgSearch:"Изображения работы в интернете ↗", nameAJ:"Артур Джафа", nameRP:"Ричард Принс", pCanal:"Гранд-канал", pStairs:"ЛЕСТНИЦА", pEntrance:"ВХОД", p_ANDRONE:"АНДРОНЕ", p_COURTYARD:"ДВОР", p_PORTEGO:"ПОРТЕГО"};
+const RUX = {concept:"Концепция", look:"Как смотреть", imgSearch:"Изображения работы в интернете ↗", nameAJ:"Артур Джафа", nameRP:"Ричард Принс", pCanal:"Гранд-канал", pStairs:"ЛЕСТНИЦА", pEntrance:"ВХОД", p_ANDRONE:"АНДРОНЕ", p_COURTYARD:"ДВОР", p_PORTEGO:"ПОРТЕГО"};
 const RU = window.HS_RU;
 let LANG='ru'; try{ LANG = localStorage.getItem('hs-lang') || 'ru'; }catch(e){}
 function t(k,...a){ const d = LANG==='ru' ? (RU.ui[k]!==undefined?RU.ui[k]:RUX[k]) : EN[k]; const v = d===undefined?EN[k]:d; return typeof v==='function'?v(...a):v; }
@@ -432,7 +437,22 @@ function drawPlans(){
 applyStatic(); buildHome();
 
 /* ---------- cards ---------- */
+const COVERS = {
+  lovemessage:'background:radial-gradient(circle at 70% 38%,#ffe9a8 0 6%,#ffb347 9%,#e2561d 20%,#5a1406 34%,#0b0605 60%)',
+  loml:'background:repeating-radial-gradient(circle at 30% 40%,rgba(255,255,255,.07) 0 1px,transparent 1px 3px),radial-gradient(ellipse at 40% 45%,#8d8d8d,#2b2b2b 55%,#050505)',
+  slopex:'background:conic-gradient(from 0deg at 0 0,#000 0 0),repeating-linear-gradient(90deg,#141414 0 18%,#000 18% 20%),repeating-linear-gradient(0deg,#3b3b3b 0 22%,#000 22% 25%)',
+  apex:'background:repeating-linear-gradient(90deg,#c43 0 6%,#111 6% 12%,#eee 12% 14%,#246 14% 22%,#000 22% 25%)',
+  dreams:'background:linear-gradient(180deg,#0d1b3a,#3b4f86 55%,#d9a35f 80%,#1b1209)',
+  aghdra:'background:radial-gradient(circle at 50% 30%,#ffd27a 0 5%,#f08a24 7%,transparent 13%),repeating-linear-gradient(170deg,#050505 0 10px,#1c1c1c 11px 12px)',
+  americanplace:'background:linear-gradient(180deg,#9ec5e0 0 45%,#d9c6a0 45% 50%,#3b3b3b 50%),repeating-linear-gradient(90deg,transparent 0 46%,#f2d24b 46% 54%,transparent 54%)',
+  cowboys80s:'background:linear-gradient(180deg,#f6c38b,#c2552b 55%,#3a1a0e)',
+  nurses:'background:radial-gradient(ellipse at 50% 40%,#f4f0e6 0 22%,#8fc7cf 23% 40%,#c23b4a 41% 52%,#2a1a1a 70%)',
+  canalzone:'background:linear-gradient(135deg,#1f3d2b,#4f7d4a 40%,#e9d8b0 41%,#e04b6a 70%,#1b1b1b)',
+  newportraits:'background:linear-gradient(180deg,#fafafa 0 12%,#ddd 12% 70%,#fafafa 70%),radial-gradient(circle at 50% 40%,#888,#444)',
+  folksongs:'background:repeating-linear-gradient(0deg,#0c0c0c 0 5px,#2a2a2a 5px 7px)',
+};
 function ph(w,big){
+  if(COVERS[w.id]) return `<div class="ph cover" style="${COVERS[w.id]}"><span class="ic">${w.yt?'':w.virtual?t('phVirtual'):''}</span><span class="cvtitle">${esc(w.title)}</span><span class="cvyear">${esc(w.year)} · ${esc(who(w))}</span></div>`;
   const c=COL[w.artist];
   const isVid=/video|film/i.test(w.medium);
   return `<div class="ph" style="background:linear-gradient(135deg,${w.artist==='AJ'?'#1a2a4d,#0d1220':w.artist==='RP'?'#4a2410,#1a0f08':'#2a2622,#141210'})">
@@ -508,6 +528,7 @@ function renderWork(id){
     <div class="med">${esc(L.w(w,'medium'))}</div>
     <h5>${t('concept')}</h5>
     <p class="concept">${esc(L.w(w,'concept'))}</p>
+    ${window.HS_LOOK[w.id]?`<h5>${t('look')}</h5><p class="looktext">${esc(window.HS_LOOK[w.id][LANG])}</p>`:''}
     ${L.bg(w)?`<h5>${t('history')}</h5><p class="bgtext">${esc(L.bg(w))}</p>`:''}
     <a class="ext" href="https://www.google.com/search?tbm=isch&q=${encodeURIComponent((w.artistName||A[w.artist])+' '+w.title+' '+w.year.replace(/[^0-9–-]/g,''))}" target="_blank" rel="noopener">${t('imgSearch')}</a><br>
     ${w.link?`<a class="ext" href="${w.link}" target="_blank" rel="noopener">${t('readMore')}</a><br>`:''}
@@ -533,7 +554,8 @@ function videoBlock(w){
   const tabs = [];
   if(w.clips) tabs.push(['mine',w.clips.length>1?t('myClips'):t('myClip')]);
   if(w.yt) tabs.push(['yt',t('ytTab')]);
-  return `<div class="vpane" id="vpane">${w.clips?clipPane(w):ytPane(w)}</div>`+
+  if(!w.clips) return ph(w)+`<div class="vpane" id="vpane">${ytPane(w)}</div>`;
+  return `<div class="vpane" id="vpane">${clipPane(w)}</div>`+
     (tabs.length>1?`<div class="vtabs">${tabs.map(([k,l],i)=>`<button class="${i?'':'on'}" onclick="vtab('${w.id}','${k}',this)">${l}</button>`).join('')}</div>`:'');
 }
 function vtab(id,k,btn){ const w=W[id]; document.querySelectorAll('.vtabs button').forEach(b=>b.classList.toggle('on',b===btn));
