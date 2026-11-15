@@ -151,6 +151,18 @@ svg.plan{width:100%;height:auto;display:block;touch-action:manipulation}
 .rel .thumb,.rel .ph{aspect-ratio:3/2}
 .rel .ph .big{font-size:22px}
 .ext{display:inline-block;margin-top:14px;color:var(--gold)}
+.vtabs{display:flex;gap:6px;padding:10px 12px;background:#000;border-top:1px solid var(--line)}
+.vtabs button{padding:7px 14px;border-radius:999px;border:1px solid var(--line);font-size:13px}
+.vtabs button.on{background:var(--ink);color:#111;border-color:var(--ink)}
+.vpane video{width:100%;max-height:62vh;background:#000;display:block}
+.vcap2{font-size:12px;color:var(--mute);padding:6px 14px 10px;background:#000}
+.ytbox{padding:22px;background:linear-gradient(135deg,#2a0b0b,#120707);min-height:220px}
+.ytbtn{display:inline-flex;align-items:center;gap:10px;background:#e62117;color:#fff;font-weight:700;padding:12px 18px;border-radius:12px;text-decoration:none}
+.ytbtn b{display:inline-block;width:0;height:0;border-left:11px solid #fff;border-top:7px solid transparent;border-bottom:7px solid transparent}
+.ytbox ul{list-style:none;margin-top:16px}.ytbox li{padding:6px 0}.ytbox li a{color:#f3d9a8}
+.ytbox p{color:#cbb9b0;font-size:13px;margin-top:14px;max-width:560px}
+.vbadge{position:absolute;top:10px;left:10px;background:rgba(0,0,0,.65);font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:4px 8px;border-radius:6px}
+.card{position:relative}
 .inroom{display:inline-block;margin-top:8px;font-size:13px;color:var(--mute);text-decoration:underline;cursor:pointer}
 
 /* lightbox */
@@ -259,7 +271,7 @@ svg.plan{width:100%;height:auto;display:block;touch-action:manipulation}
 <div class="lb" id="lb"><img id="lbimg" alt=""></div>
 
 <footer class="foot"><div class="wrap">
-  A personal virtual visit made from photos taken in the exhibition on 15 November 2026. Work concepts are summaries written for this site, not the gallery's wall texts. Room 17 is imaginary: it gathers related works that are not in the show.
+  A personal virtual visit made from photos and short clips taken in the exhibition on 15 November 2026. Work concepts are summaries written for this site, not the gallery's wall texts. Room 17 is imaginary: it gathers related works that are not in the show.
   Exhibition: “Helter Skelter: Arthur Jafa and Richard Prince”, curated by Nancy Spector, Fondazione Prada, Ca' Corner della Regina, Venice.
 </div></footer>
 
@@ -338,8 +350,9 @@ function ph(w,big){
     <span class="big">${esc(w.year)}</span></div>`;
 }
 function card(w){
-  const img = w.photos[0] ? `<img class="thumb" loading="lazy" src="img/${w.photos[0]}.jpg" alt="${esc(w.title)}">` : (w.video? `<img class="thumb" src="media/room12-poster.jpg" alt="">` : ph(w));
-  return `<button class="card" onclick="openWork('${w.id}')">${img}<div class="meta"><div class="who ${w.artist}">${esc(who(w))}${w.room!=='17'?' · room '+w.room:''}</div><h4>${esc(w.title)}</h4><div class="yr">${esc(w.year)}${w.count?' · '+w.count:''}</div></div></button>`;
+  const img = w.photos[0] ? `<img class="thumb" loading="lazy" src="img/${w.photos[0]}.jpg" alt="${esc(w.title)}">` : (w.clips? `<img class="thumb" loading="lazy" src="${w.clips[0].poster}" alt="">` : ph(w));
+  const badge = w.clips ? '<span class="vbadge">▶ my clip</span>' : (w.yt ? '<span class="vbadge">▶ YouTube</span>' : '');
+  return `<button class="card" onclick="openWork('${w.id}')">${badge}${img}<div class="meta"><div class="who ${w.artist}">${esc(who(w))}${w.room!=='17'?' · room '+w.room:''}</div><h4>${esc(w.title)}</h4><div class="yr">${esc(w.year)}${w.count?' · '+w.count:''}</div></div></button>`;
 }
 
 /* ---------- room view ---------- */
@@ -352,7 +365,7 @@ function showRoom(id){
   const mini = r.floor==='ground'?plan(GROUND,GROUND_SOLID,'ground',id):r.floor==='first'?plan(FIRST,FIRST_SOLID,'first',id):
     `<div class="virtual-note">Room 17 sits outside the palazzo. It's an imagined annex of works by the two artists that weren't shown in Venice, linked back to the rooms where their descendants hang.</div>`;
   let strip = r.photos.map(p=>`<img src="img/${p}.jpg" alt="Room ${id}" data-lb loading="lazy">`).join('');
-  if(r.video) strip = `<div><video src="media/room12-clip.mp4" poster="media/room12-poster.jpg" controls playsinline preload="none"></video><div class="vcap">Clip filmed in the show, probably from <i>BEN GAZARRA</i></div></div>`+strip;
+  (r.clips||[]).forEach(wid=>{ const w=W[wid]; (w.clips||[]).slice().reverse().forEach(c=>{ strip = `<div><video src="${c.src}" poster="${c.poster}" controls playsinline preload="none"></video><div class="vcap">${esc(c.cap)} · <a href="#work-${wid}">YouTube & more</a></div></div>` + strip; }); });
   $('#roomwrap').innerHTML = `
     <div class="room-head">
       <div class="rnum">${id}</div>
@@ -394,7 +407,7 @@ function renderWork(id){
   const w=W[id]; if(!w) return;
   gphotos=w.photos; gi=0;
   const rel=w.related.map(r=>W[r]).filter(Boolean);
-  const gal = w.video ? `<video src="media/room12-clip.mp4" poster="media/room12-poster.jpg" controls playsinline style="width:100%;max-height:66vh;background:#000"></video>`
+  const gal = (w.clips||w.yt) ? videoBlock(w)
     : gphotos.length ? `<img id="gimg" src="img/${gphotos[0]}.jpg" alt="${esc(w.title)}">${gphotos.length>1?`<button class="gnav l" onclick="gal(-1)">‹</button><button class="gnav r" onclick="gal(1)">›</button><div class="gdots">${gphotos.map((_,i)=>`<i class="${i?'':'on'}"></i>`).join('')}</div>`:''}`
     : ph(w);
   $('#sheet').innerHTML=`<div class="gal">${gal}</div>
@@ -415,9 +428,26 @@ function renderWork(id){
   const gimg=$('#gimg'); if(gimg){ gimg.onclick=()=>lb(gimg.src); swipe($('#sheet .gal'),d=>gal(d)); }
   $('#modal').classList.add('open'); $('#modal').scrollTop=0; document.body.style.overflow='hidden';
 }
+function ytPane(w){
+  const q=encodeURIComponent(w.yt.q);
+  const off=(w.yt.official||[]).map(([l,u])=>`<li><a href="${u}" target="_blank" rel="noopener">${esc(l)} ↗</a></li>`).join('');
+  return `<div class="ytbox"><a class="ytbtn" href="https://www.youtube.com/results?search_query=${q}" target="_blank" rel="noopener"><b></b>Find the full video on YouTube</a>
+    ${off?`<ul><li style="color:var(--mute);font-size:12px;letter-spacing:.12em;text-transform:uppercase">Official sources</li>${off}</ul>`:''}
+    <p>Jafa's videos are shown in museums and occasional official streams. Full copies on YouTube are usually unofficial uploads, so you'll find mainly interviews, talks, trailers and excerpts there.</p></div>`;
+}
+function clipPane(w){ return (w.clips||[]).map(c=>`<video src="${c.src}" poster="${c.poster}" controls playsinline preload="metadata"></video><div class="vcap2">${esc(c.cap)}</div>`).join(''); }
+function videoBlock(w){
+  const tabs = [];
+  if(w.clips) tabs.push(['mine','My clip'+(w.clips.length>1?'s':'')]);
+  if(w.yt) tabs.push(['yt','YouTube · full video']);
+  return `<div class="vpane" id="vpane">${w.clips?clipPane(w):ytPane(w)}</div>`+
+    (tabs.length>1?`<div class="vtabs">${tabs.map(([k,l],i)=>`<button class="${i?'':'on'}" onclick="vtab('${w.id}','${k}',this)">${l}</button>`).join('')}</div>`:'');
+}
+function vtab(id,k,btn){ const w=W[id]; document.querySelectorAll('.vtabs button').forEach(b=>b.classList.toggle('on',b===btn));
+  document.querySelectorAll('#vpane video').forEach(v=>v.pause()); $('#vpane').innerHTML = k==='yt'?ytPane(w):clipPane(w); }
 function gal(d){ if(gphotos.length<2)return; gi=(gi+d+gphotos.length)%gphotos.length; $('#gimg').src=`img/${gphotos[gi]}.jpg`; document.querySelectorAll('.gdots i').forEach((e,i)=>e.classList.toggle('on',i===gi)); }
 let backHash='';
-function closeWork(){ $('#modal').classList.remove('open'); document.body.style.overflow=''; if(location.hash.startsWith('#work-')) location.hash=backHash; }
+function closeWork(){ document.querySelectorAll('#modal video').forEach(v=>v.pause()); $('#modal').classList.remove('open'); document.body.style.overflow=''; if(location.hash.startsWith('#work-')) location.hash=backHash; }
 $('#modal').onclick=e=>{ if(e.target.id==='modal') closeWork(); };
 
 /* ---------- lightbox & swipe ---------- */
