@@ -20,5 +20,4 @@ Rooms 9, 12 and 16 include short clips filmed in the show (`media/`). Every vide
 museum pages. Full Jafa videos aren't officially on YouTube, so nothing pirated is embedded.
 
 ## Deploy (GitHub Pages)
-Static files only, no build. Push to a public repo and enable
-Settings → Pages → "Deploy from a branch" → `main` / root.
+Deployed automatically by `.github/workflows/pages.yml` to https://dmitrii-volokitin-job.github.io/jafa-prince-venice/
