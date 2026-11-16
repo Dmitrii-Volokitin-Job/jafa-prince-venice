@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Helter Skelter — дизайн-атлас</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;900&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;1,9..144,400&display=swap" rel="stylesheet">
+<style>
+/* ===== site CSS, copied by tools/build-atlas.py ===== */
+/*SITE_CSS*/
+/* ===== atlas ===== */
+.bar{position:relative}
+.at-hero{padding:56px 18px 34px;border-bottom:1px solid var(--line)}
+.at-hero h1{font:900 clamp(40px,8vw,88px)/.92 Archivo;text-transform:uppercase;letter-spacing:-.02em;margin:10px 0 14px}
+.at-hero h1 span{color:var(--rp)} .at-hero h1 i{color:var(--aj);font-style:normal}
+.at-hero p{max-width:720px;color:var(--text2);font-size:17px}
+.at-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.at-nav{position:sticky;top:0;z-index:20;background:var(--barbg);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.at-nav .wrap{display:flex;gap:6px;overflow-x:auto;padding-top:8px;padding-bottom:8px;scrollbar-width:none}
+.at-nav a{white-space:nowrap;text-decoration:none;font-size:13px;padding:7px 12px;border-radius:999px;border:1px solid var(--line)}
+.at-nav a:hover{border-color:var(--ink)}
+.at-grid{display:grid;gap:16px}
+.at-g2{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+.at-g4{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+.at-box{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px}
+.at-box h3{font:700 20px Fraunces;margin-bottom:6px}
+.at-box p{color:var(--text2);font-size:15px}
+.at-num{font:900 34px Archivo;color:var(--rp);line-height:1;margin-bottom:8px}
+.at-skin{border-radius:16px;overflow:hidden;border:1px solid var(--line)}
+.at-skin .top{padding:16px;background:var(--bg);color:var(--ink)}
+.at-skin .top b{font:700 18px Fraunces;display:block}
+.at-skin .top small{color:var(--mute)}
+.at-sw{display:grid;grid-template-columns:repeat(6,1fr)}
+.at-sw div{height:46px}
+.at-tok{width:100%;border-collapse:collapse;font-size:13px}
+.at-tok td,.at-tok th{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+.at-tok th{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);font-weight:700}
+.at-chip{display:inline-block;width:26px;height:26px;border-radius:7px;border:1px solid rgba(128,128,128,.35);vertical-align:middle}
+.at-code{font:12px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--mute)}
+.at-scroll{overflow-x:auto}
+.at-ok{color:#3fb47a;font-weight:700}.at-bad{color:#e5484d;font-weight:700}
+.at-type>div{padding:14px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:150px 1fr;gap:14px;align-items:baseline}
+@media(max-width:640px){.at-type>div{grid-template-columns:1fr}}
+.at-type .lab{font-size:12px;color:var(--mute)}
+.at-stage{background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:16px;padding:18px;display:grid;gap:18px}
+.at-stage{grid-template-columns:minmax(0,1fr)}
+.at-stage .bar .wrap{padding:0 10px;gap:6px}
+@media(max-width:400px){.at-stage{padding:12px}.at-stage .logo{font-size:12px}}
+.at-stage .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.at-stage .lbl{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);font-weight:700;margin-bottom:6px}
+.at-ctrl{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.at-ctrl button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.at-ctrl select{background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:8px 12px;font:inherit;font-size:13px;min-height:38px}
+.at-devs{display:grid;grid-template-columns:1fr 1.7fr 2.6fr;gap:18px;align-items:end}
+@media(max-width:900px){.at-devs{grid-template-columns:1fr 1fr}.at-devs .dv:last-child{grid-column:1/-1}}
+@media(max-width:560px){.at-devs{grid-template-columns:1fr}}
+.dv .frame{position:relative;overflow:hidden;border-radius:22px;border:8px solid #222;background:#000;box-shadow:0 20px 50px rgba(0,0,0,.35)}
+.dv.desk .frame{border-radius:10px;border-width:6px}
+.dv iframe{position:absolute;top:0;left:0;border:0;transform-origin:0 0;background:var(--bg)}
+.dv figcaption{font-size:12px;color:var(--mute);margin-top:8px;text-align:center}
+.at-phones{display:grid;grid-template-columns:repeat(5,minmax(170px,1fr));gap:14px;overflow-x:auto;padding-bottom:8px}
+.at-bp{width:100%;border-collapse:collapse;font-size:14px}
+.at-bp td,.at-bp th{padding:10px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.at-bp th{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+.at-bar{height:10px;border-radius:5px;background:var(--panel2);position:relative;margin-top:6px}
+.at-bar i{position:absolute;top:0;bottom:0;border-radius:5px;background:var(--rp)}
+.at-qa li{list-style:none;padding:10px 0;border-bottom:1px solid var(--line);display:flex;gap:10px}
+.at-qa li b{min-width:22px;color:#3fb47a}
+</style>
+</head>
+<body>
+<header class="bar"><div class="wrap">
+  <div class="logo">Helter <span>Skel</span><i>ter</i>&nbsp;<span style="color:var(--mute);font-weight:500;text-transform:none;letter-spacing:0" data-t="atlas">· атлас</span></div>
+  <div class="sp"></div>
+  <a class="pill" href="index.html" style="text-decoration:none" data-t="open">Открыть сайт ↗</a>
+  <button class="pill" id="lng">EN</button>
+</div></header>
+
+<div class="wrap at-hero">
+  <div class="kicker" data-t="k0">Дизайн-атлас · версия 1.0 · ноябрь 2026</div>
+  <h1>Helter <span>Skel</span><i>ter</i></h1>
+  <p data-t="intro">Единый справочник по визуальному языку виртуального визита: принципы, скины и цветовые токены, типографика, компоненты, сетка и брейкпоинты, проверки качества. Всё, что ниже, взято прямо из рабочего сайта — токены и стили подтягиваются из него автоматически, а превью показывают живые страницы.</p>
+  <div class="at-meta"><span class="chip"><i style="background:var(--aj)"></i><span data-t="m1">5 скинов</span></span><span class="chip"><i style="background:var(--rp)"></i><span data-t="m2">10 проверенных разрешений</span></span><span class="chip"><i style="background:var(--gold)"></i><span data-t="m3">RU / EN</span></span><span class="chip"><i style="background:#3fb47a"></i><span data-t="m4">WCAG AA контраст</span></span></div>
+</div>
+
+<nav class="at-nav"><div class="wrap">
+  <a href="#principles" data-t="n1">Принципы</a><a href="#skins" data-t="n2">Скины</a><a href="#tokens" data-t="n3">Токены</a><a href="#type" data-t="n4">Типографика</a><a href="#components" data-t="n5">Компоненты</a><a href="#devices" data-t="n6">Устройства</a><a href="#gallery" data-t="n7">Все скины</a><a href="#breakpoints" data-t="n8">Брейкпоинты</a><a href="#qa" data-t="n9">Качество</a>
+</div></nav>
+
+<main>
+<section id="principles"><div class="wrap">
+  <div class="kicker" data-t="k1">01 · Принципы</div>
+  <h2 data-t="h1">Четыре идеи, на которых всё держится</h2>
+  <div class="at-grid at-g4" style="margin-top:18px">
+    <div class="at-box"><div class="at-num">01</div><h3 data-t="p1h">Палаццо — это интерфейс</h3><p data-t="p1">Навигация повторяет реальное здание: план двух этажей, залы 1–16 в порядке обхода и виртуальный зал 17. Пользователь всегда видит, где он находится.</p></div>
+    <div class="at-box"><div class="at-num">02</div><h3 data-t="p2h">Два голоса — два цвета</h3><p data-t="p2">Синий — Артур Джафа, оранжевый — Ричард Принс. Цвета кодируют автора везде: точки на плане, подписи карточек, логотип.</p></div>
+    <div class="at-box"><div class="at-num">03</div><h3 data-t="p3h">Искусство впереди интерфейса</h3><p data-t="p3">Нейтральные поверхности и крупные фото. Обложки работ без фото — абстракции в духе работы, а не чужие кадры.</p></div>
+    <div class="at-box"><div class="at-num">04</div><h3 data-t="p4h">Доступно для всех</h3><p data-t="p4">Контраст текста по WCAG AA во всех скинах, кнопки не меньше 38 px, тема следует настройке устройства, отдельный скин высокого контраста.</p></div>
+  </div>
+</div></section>
+
+<section id="skins"><div class="wrap">
+  <div class="kicker" data-t="k2">02 · Скины</div>
+  <h2 data-t="h2">Пять скинов на одних токенах</h2>
+  <p class="lead" data-t="l2">Скин меняет только значения CSS-переменных — разметка и компоненты одни и те же. Выбор — кнопка ◐ в шапке сайта; по умолчанию сайт берёт светлую или тёмную тему из системы. Для показа заказчику любой скин открывается ссылкой вида <span class="at-code">index.html?skin=laguna</span>.</p>
+  <div class="at-grid at-g2" id="skincards"></div>
+</div></section>
+
+<section id="tokens"><div class="wrap">
+  <div class="kicker" data-t="k3">03 · Токены</div>
+  <h2 data-t="h3">Цветовые токены</h2>
+  <p class="lead" data-t="l3">Значения считаны из index.html при сборке атласа. Колонка «контраст» — соотношение цвета текста с фоном, на котором он используется (норма AA: 4.5 для текста, 3 для крупного).</p>
+  <div class="at-scroll"><table class="at-tok" id="toktable"></table></div>
+  <h3 style="font:700 20px Fraunces;margin:28px 0 10px" data-t="ctr">Контраст ключевых пар</h3>
+  <div class="at-scroll"><table class="at-tok" id="contrast"></table></div>
+</div></section>
+
+<section id="type"><div class="wrap">
+  <div class="kicker" data-t="k4">04 · Типографика</div>
+  <h2 data-t="h4">Два шрифта: гротеск и антиква</h2>
+  <p class="lead" data-t="l4">Archivo — голос интерфейса и заголовков-плакатов. Fraunces — голос текста о работах. Оба из Google Fonts, поддерживают кириллицу.</p>
+  <div class="at-type">
+    <div><span class="lab">Display · Archivo 900 · clamp(48–128)</span><span style="font:900 clamp(28px,8vw,72px)/.95 Archivo;text-transform:uppercase;overflow-wrap:anywhere">Helter Skelter</span></div>
+    <div><span class="lab">H2 · Fraunces 700 · 26–40</span><span style="font:700 clamp(26px,5vw,40px)/1.1 Fraunces" data-t="ty1">Два взгляда на Америку</span></div>
+    <div><span class="lab">H3/H4 · Fraunces 700 · 17–34</span><span style="font:700 22px Fraunces">Untitled (Protest Painting)</span></div>
+    <div><span class="lab">Lead · Fraunces 400 · 18–19</span><span style="font:400 19px/1.55 Fraunces;color:var(--text2)" data-t="ty2">Как сделать протестное искусство без лозунгов? Принс пишет пустые плакаты.</span></div>
+    <div><span class="lab">Body · Archivo 400 · 15–16</span><span style="font-size:16px;color:var(--text2)" data-t="ty3">Плакаты «I AM A MAN» пришли с забастовки мусорщиков Мемфиса в 1968 году.</span></div>
+    <div><span class="lab">Kicker · Archivo 700 · 12 · caps</span><span class="kicker" data-t="ty4">Второй этаж · Протест</span></div>
+    <div><span class="lab">Meta · Archivo 700 · 11 · caps</span><span class="who RP" data-t="ty5">Ричард Принс · зал 10</span></div>
+  </div>
+</div></section>
+
+<section id="components"><div class="wrap">
+  <div class="kicker" data-t="k5">05 · Компоненты</div>
+  <h2 data-t="h5">Компоненты в выбранном скине</h2>
+  <p class="lead" data-t="l5">Это настоящие классы сайта. Переключите скин — компоненты перекрасятся так же, как на сайте.</p>
+  <div class="at-ctrl" id="compskins"></div>
+  <div class="at-stage" id="stage" data-theme="dark">
+    <div><div class="lbl" data-t="c1">Шапка</div>
+      <div class="bar" style="position:relative;border-radius:12px;border:1px solid var(--line)"><div class="wrap" style="max-width:none"><div class="logo">Helter <span>Skel</span><i>ter</i></div><div class="sp"></div><span class="pill themebtn">◐</span><span class="pill">EN</span><span class="pill">План</span></div></div></div>
+    <div><div class="lbl" data-t="c2">Кнопки и метки</div><div class="row">
+      <button class="btn">Начать тур →</button><button class="btn ghost" style="color:var(--ink);border-color:var(--ink)">Открыть план</button>
+      <span class="pill">Pill</span><span class="chip"><i style="background:var(--rp)"></i>Протест <span style="color:var(--mute)">7</span></span><span class="chip sm"><i style="background:#b9a6e6"></i>Духовная Америка</span>
+      <span class="kicker">Kicker</span><span class="tag">Tag · тема</span></div></div>
+    <div><div class="lbl" data-t="c3">Карточки работ</div>
+      <div class="works" style="margin-top:0;grid-template-columns:repeat(auto-fill,minmax(200px,1fr))">
+        <button class="card"><img class="thumb" src="img/sunsets.jpg" alt=""><div class="meta"><div class="who RP">Ричард Принс · зал 3</div><h4>Untitled (Sunsets)</h4><div class="yr">1981–82</div></div></button>
+        <button class="card"><img class="thumb" src="img/viriconium.jpg" alt=""><div class="meta"><div class="who AJ">Артур Джафа · зал 7</div><h4>Viriconium</h4><div class="yr">2026</div></div></button>
+        <button class="card"><span class="vbadge">▶ YouTube</span><div class="ph cover" style="background:radial-gradient(circle at 70% 38%,#ffe9a8 0 6%,#ffb347 9%,#e2561d 20%,#5a1406 34%,#0b0605 60%)"><span class="ic"></span><span class="cvtitle">Love Is the Message…</span><span class="cvyear">2016 · Артур Джафа</span></div><div class="meta"><div class="who AJ">Артур Джафа · зал 4</div><h4>Love Is the Message, The Message Is Death</h4><div class="yr">2016</div></div></button>
+      </div></div>
+    <div><div class="lbl" data-t="c4">Текст работы</div>
+      <div class="sbody" style="padding:0;max-width:640px"><h5>Концепция</h5><p class="concept">Принс вырос в годы антивоенного движения, но решил «рисовать протест», а не воевать.</p><h5>Как смотреть</h5><p class="looktext">Сначала посмотрите на форму, а потом на поверхность.</p><h5>История и контекст</h5><p class="bgtext">Плакаты «I AM A MAN» пришли с забастовки мусорщиков Мемфиса в 1968 году.</p></div></div>
+    <div><div class="lbl" data-t="c5">План и навигация по залам</div>
+      <div class="row" style="align-items:stretch">
+        <svg viewBox="0 0 300 140" style="width:min(300px,100%);height:auto">
+          <rect x="0" y="0" width="300" height="30" style="fill:var(--pl-water)"/><text x="150" y="20" text-anchor="middle" style="fill:var(--pl-canal);font:italic 10px Fraunces">Grand Canal</text>
+          <rect x="18" y="40" width="74" height="90" rx="3" style="fill:var(--pl-rm);stroke:var(--pl-stroke)"/><text x="55" y="88" text-anchor="middle" style="fill:var(--pl-lbl);font:700 15px Archivo">4</text>
+          <rect x="98" y="40" width="104" height="90" rx="3" style="fill:var(--pl-seen);stroke:var(--pl-stroke)"/><text x="150" y="88" text-anchor="middle" style="fill:var(--pl-lbl);font:700 15px Archivo">2</text>
+          <rect x="208" y="40" width="74" height="90" rx="3" style="fill:var(--pl-cur);stroke:var(--pl-curS);stroke-width:2"/><text x="245" y="88" text-anchor="middle" style="fill:var(--pl-lbl);font:700 15px Archivo">3</text>
+          <circle cx="26" cy="49" r="3.4" style="fill:var(--aj)"/><circle cx="106" cy="49" r="3.4" style="fill:var(--aj)"/><circle cx="216" cy="49" r="3.4" style="fill:var(--rp)"/>
+        </svg>
+        <div class="roomnav" style="margin:0;flex:1;min-width:240px"><button><small>← назад</small>Андроне</button><button><small>дальше →</small>Зал 4</button></div>
+      </div>
+      <div class="legend" style="margin-top:8px"><span><b style="background:var(--pl-rm);border:1px solid var(--pl-stroke)"></b>зал</span><span><b style="background:var(--pl-seen)"></b>посещён</span><span><b style="background:var(--pl-cur);border:1px solid var(--pl-curS)"></b>вы здесь</span><span><b style="background:var(--aj)"></b>Джафа</span><span><b style="background:var(--rp)"></b>Принс</span></div></div>
+    <div><div class="lbl" data-t="c6">Видео: свой ролик / YouTube</div>
+      <div class="vtabs" style="border-radius:10px"><button class="on">Мои видео</button><button>YouTube · полное видео</button></div></div>
+  </div>
+</div></section>
+
+<section id="devices"><div class="wrap">
+  <div class="kicker" data-t="k6">06 · Устройства</div>
+  <h2 data-t="h6">Живое превью: телефон, планшет, компьютер</h2>
+  <p class="lead" data-t="l6">Внутри рамок — настоящий сайт в реальном разрешении устройства, уменьшенный для показа. Его можно листать и нажимать.</p>
+  <div class="at-ctrl" id="devskins"></div>
+  <div class="at-ctrl"><select id="devpage"></select><button class="pill" id="devlang">RU</button></div>
+  <div class="at-devs">
+    <figure class="dv" data-w="390" data-h="844"><div class="frame"><iframe loading="lazy" title="phone"></iframe></div><figcaption>iPhone 14 · 390 × 844</figcaption></figure>
+    <figure class="dv" data-w="820" data-h="1180"><div class="frame"><iframe loading="lazy" title="tablet"></iframe></div><figcaption>iPad Air · 820 × 1180</figcaption></figure>
+    <figure class="dv desk" data-w="1440" data-h="900"><div class="frame"><iframe loading="lazy" title="desktop"></iframe></div><figcaption>Desktop · 1440 × 900</figcaption></figure>
+  </div>
+</div></section>
+
+<section id="gallery"><div class="wrap">
+  <div class="kicker" data-t="k7">07 · Все скины рядом</div>
+  <h2 data-t="h7">Одна страница — пять скинов</h2>
+  <p class="lead" data-t="l7">Для выбора с заказчиком: одна и та же страница во всех скинах на телефоне. Страницу можно сменить.</p>
+  <div class="at-ctrl"><select id="galpage"></select></div>
+  <div class="at-phones" id="phones"></div>
+</div></section>
+
+<section id="breakpoints"><div class="wrap">
+  <div class="kicker" data-t="k8">08 · Сетка и брейкпоинты</div>
+  <h2 data-t="h8">Как раскладка меняется по ширине</h2>
+  <div class="at-scroll"><table class="at-bp" id="bptable"></table></div>
+</div></section>
+
+<section id="qa"><div class="wrap">
+  <div class="kicker" data-t="k9">09 · Качество</div>
+  <h2 data-t="h9">Что проверяется автоматически</h2>
+  <ul class="at-qa" id="qalist"></ul>
+</div></section>
+</main>
+<footer class="foot"><div class="wrap" data-t="foot">Атлас собирается скриптом tools/build-atlas.py из рабочего index.html — после изменения стилей сайта просто пересоберите его.</div></footer>
+
+<script>
+/*TOKENS*/
+const SK=[['dark','Notte','Ночь','Тёмная тема по умолчанию: тёплый почти-чёрный, как зал с видео.','Default dark: warm near-black, like a screening room.'],
+ ['light','Carta','Бумага','Светлая: цвет буклета и венецианской штукатурки.','Light: the colour of the booklet and Venetian plaster.'],
+ ['laguna','Laguna','Лагуна','Глубокая сине-зелёная вода лагуны и канала.','Deep blue-green of the lagoon and canal water.'],
+ ['terracotta','Terracotta','Терракота','Тёплая, «каменная» — кирпич и фасады палаццо.','Warm and earthy — brick and palazzo façades.'],
+ ['contrast','High contrast','Высокий контраст','Чёрно-жёлтая для слабого зрения и яркого солнца.','Black and yellow for low vision and bright sunlight.']];
+const PAGES=[['','Главная','Home'],['map','План этажей','Floor plan'],['room-7','Зал 7 · портего','Room 7 · portego'],['room-10','Зал 10 · протест','Room 10 · protest'],['work-graduation','Работа · Graduation','Work · Graduation'],['work-loml','Работа · LOML (обложка)','Work · LOML (cover)'],['thread-protest','Нить · протест','Thread · protest'],['room-17','Зал 17 · виртуальный','Room 17 · virtual']];
+const T={en:{atlas:'· atlas',open:'Open the site ↗',k0:'Design atlas · version 1.0 · November 2026',intro:'One reference for the visual language of the virtual visit: principles, skins and colour tokens, typography, components, grid and breakpoints, quality checks. Everything below comes straight from the working site — tokens and styles are pulled from it automatically and the previews show live pages.',m1:'5 skins',m2:'10 tested resolutions',m3:'RU / EN',m4:'WCAG AA contrast',
+ n1:'Principles',n2:'Skins',n3:'Tokens',n4:'Typography',n5:'Components',n6:'Devices',n7:'All skins',n8:'Breakpoints',n9:'Quality',
+ k1:'01 · Principles',h1:'Four ideas that hold it together',p1h:'The palazzo is the interface',p1:'Navigation follows the real building: a plan of both floors, rooms 1–16 in walking order and a virtual room 17. You always see where you are.',p2h:'Two voices, two colours',p2:'Blue is Arthur Jafa, orange is Richard Prince. The colours mark the author everywhere: dots on the plan, card labels, the logo.',p3h:'Art before interface',p3:'Neutral surfaces and big photos. Works without photos get abstract covers in their spirit, never other people\'s images.',p4h:'Accessible to everyone',p4:'WCAG AA text contrast in every skin, buttons at least 38 px, theme follows the device, plus a dedicated high-contrast skin.',
+ k2:'02 · Skins',h2:'Five skins on the same tokens',l2:'A skin only changes CSS variable values — markup and components stay the same. Pick one with ◐ in the site header; by default the site follows the device\'s light or dark setting. To show a client, open any skin with a link like <span class="at-code">index.html?skin=laguna</span>.',
+ k3:'03 · Tokens',h3:'Colour tokens',l3:'Values are read from index.html when the atlas is built. "Contrast" is the ratio of the text colour to the background it sits on (AA: 4.5 for text, 3 for large text).',ctr:'Contrast of key pairs',
+ k4:'04 · Typography',h4:'Two typefaces: grotesque and serif',l4:'Archivo is the voice of the interface and poster headings. Fraunces is the voice of the writing about the works. Both from Google Fonts, both with Cyrillic.',ty1:'Two eyes on America',ty2:'How do you make protest art without slogans? Prince paints empty placards.',ty3:'The "I AM A MAN" signs come from the 1968 Memphis sanitation strike.',ty4:'First floor · Protest',ty5:'Richard Prince · room 10',
+ k5:'05 · Components',h5:'Components in the selected skin',l5:'These are the site\'s real classes. Switch the skin and the components recolour exactly as on the site.',c1:'Header',c2:'Buttons and labels',c3:'Work cards',c4:'Work text',c5:'Plan and room navigation',c6:'Video: my clip / YouTube',
+ k6:'06 · Devices',h6:'Live preview: phone, tablet, desktop',l6:'Inside the frames is the real site at the device\'s real resolution, scaled down. You can scroll and tap it.',
+ k7:'07 · All skins side by side',h7:'One page, five skins',l7:'For choosing with the client: the same page in every skin on a phone. You can change the page.',
+ k8:'08 · Grid and breakpoints',h8:'How the layout changes with width',k9:'09 · Quality',h9:'What is checked automatically',foot:'The atlas is built by tools/build-atlas.py from the working index.html — after changing the site\'s styles, just rebuild it.'}};
+let AL='ru'; const RUX={}; document.querySelectorAll('[data-t]').forEach(e=>RUX[e.dataset.t]=e.innerHTML);
+const tr=k=> AL==='en'&&T.en[k]?T.en[k]:RUX[k];
+const $=s=>document.querySelector(s);
+function lum(h){h=h.trim();if(h.startsWith('rgba'))return null;if(h.length===4)h='#'+[...h.slice(1)].map(c=>c+c).join('');const n=[1,3,5].map(i=>parseInt(h.slice(i,i+2),16)/255).map(v=>v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4));return .2126*n[0]+.7152*n[1]+.0722*n[2]}
+function ratio(a,b){const x=lum(a),y=lum(b);if(x==null||y==null)return null;return (Math.max(x,y)+.05)/(Math.min(x,y)+.05)}
+function skinCards(){ $('#skincards').innerHTML=SK.map(([id,en,ru,dr,de])=>{const t=TOKENS[id];
+  return `<div class="at-skin" data-theme="${id}"><div class="top"><b>${AL==='en'?en:ru}</b><small>${AL==='en'?de:dr}</small>
+   <div class="row" style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><span class="pill">Pill</span><span class="chip"><i style="background:var(--aj)"></i>Jafa</span><span class="chip"><i style="background:var(--rp)"></i>Prince</span></div></div>
+   <div class="at-sw">${['bg','panel','ink','mute','aj','rp'].map(k=>`<div title="--${k} ${t[k]}" style="background:${t[k]}"></div>`).join('')}</div>
+   <div style="padding:10px 14px;background:var(--panel);display:flex;justify-content:space-between;align-items:center"><span class="at-code">?skin=${id}</span><a class="pill" style="text-decoration:none" href="index.html?skin=${id}&nogate=1" target="_blank" rel="noopener">${AL==='en'?'Open':'Открыть'} ↗</a></div></div>`}).join('');}
+const DESC={bg:['Фон страницы','Page background'],panel:['Карточки, панели','Cards, panels'],panel2:['Вторичная поверхность','Secondary surface'],ink:['Основной текст','Main text'],text2:['Текст описаний','Body copy'],mute:['Подписи, мета','Captions, meta'],line:['Рамки, разделители','Borders, dividers'],aj:['Артур Джафа','Arthur Jafa'],rp:['Ричард Принс','Richard Prince'],ot:['Другие авторы','Other artists'],gold:['Акцент, kicker','Accent, kicker'],barbg:['Фон шапки','Header background'],shade:['Затемнение под окном','Modal backdrop'],hover:['Рамка при наведении','Hover border']};
+function tokTable(){ const keys=Object.keys(TOKENS.dark).filter(k=>!k.startsWith('pl-'));
+  $('#toktable').innerHTML=`<tr><th>${AL==='en'?'Token':'Токен'}</th><th>${AL==='en'?'Use':'Где'}</th>${SK.map(s=>`<th>${AL==='en'?s[1]:s[2]}</th>`).join('')}</tr>`+
+   keys.map(k=>`<tr><td class="at-code">--${k}</td><td>${DESC[k]?DESC[k][AL==='en'?1:0]:''}</td>${SK.map(([id])=>`<td><span class="at-chip" style="background:${TOKENS[id][k]}"></span> <span class="at-code">${TOKENS[id][k]}</span></td>`).join('')}</tr>`).join('')+
+   `<tr><td class="at-code">--pl-*</td><td>${AL==='en'?'Floor plan (14 tokens)':'План этажей (14 токенов)'}</td>${SK.map(([id])=>`<td>${['pl-water','pl-rm','pl-seen','pl-cur','pl-curS'].map(k=>`<span class="at-chip" style="width:18px;height:18px;background:${TOKENS[id][k]}"></span>`).join('')}</td>`).join('')}</tr>`;
+  const pairs=[['ink','bg',AL==='en'?'Text / page':'Текст / страница'],['text2','panel',AL==='en'?'Body / card':'Описание / карточка'],['mute','bg',AL==='en'?'Meta / page':'Мета / страница'],['mute','panel',AL==='en'?'Meta / card':'Мета / карточка'],['aj','panel',AL==='en'?'Jafa label / card':'Подпись Джафы / карточка'],['rp','panel',AL==='en'?'Prince label / card':'Подпись Принса / карточка'],['gold','bg',AL==='en'?'Kicker / page':'Kicker / страница']];
+  $('#contrast').innerHTML=`<tr><th>${AL==='en'?'Pair':'Пара'}</th>${SK.map(s=>`<th>${AL==='en'?s[1]:s[2]}</th>`).join('')}</tr>`+pairs.map(([a,b,l])=>`<tr><td>${l}</td>${SK.map(([id])=>{const r=ratio(TOKENS[id][a],TOKENS[id][b]);return `<td><span class="${r>=4.5?'at-ok':'at-bad'}">${r?r.toFixed(1):'—'}</span> <span class="at-code">${r>=7?'AAA':r>=4.5?'AA':'—'}</span></td>`}).join('')}</tr>`).join('');}
+function skinButtons(el,cb,cur){ el.innerHTML=SK.map(([id,en,ru])=>`<button class="pill ${id===cur?'on':''}" data-s="${id}">${AL==='en'?en:ru}</button>`).join(''); el.querySelectorAll('button').forEach(b=>b.onclick=()=>{el.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));cb(b.dataset.s)}); }
+let devSkin='dark', devLang='ru';
+function pageOpts(sel,cur){ sel.innerHTML=PAGES.map(([h,ru,en])=>`<option value="${h}" ${h===cur?'selected':''}>${AL==='en'?en:ru}</option>`).join(''); }
+function src(skin,page,lang){ return `index.html?nogate=1&skin=${skin}&lang=${lang}#${page}`; }
+function fit(){ document.querySelectorAll('.dv').forEach(d=>{const w=+d.dataset.w,h=+d.dataset.h,f=d.querySelector('.frame'),i=d.querySelector('iframe');const sc=(f.clientWidth)/w;i.style.width=w+'px';i.style.height=h+'px';i.style.transform=`scale(${sc})`;f.style.height=(h*sc)+'px';}); }
+function loadDevs(){ const p=$('#devpage').value; document.querySelectorAll('.dv iframe').forEach(i=>i.src=src(devSkin,p,devLang)); fit(); }
+function phones(){ const p=$('#galpage').value; $('#phones').innerHTML=SK.map(([id,en,ru])=>`<figure class="dv" data-w="390" data-h="844"><div class="frame"><iframe loading="lazy" title="${id}" src="${src(id,p,AL)}"></iframe></div><figcaption>${AL==='en'?en:ru}</figcaption></figure>`).join(''); fit(); }
+function bp(){ const R=AL==='en';
+  const rows=[['320–759',R?'Phones':'Телефоны','iPhone SE … Pro Max',R?'One column. Floor plan sits above the photos (not sticky). Rooms in a horizontal photo strip. Header: logo + 3 round buttons; the "rooms visited" counter is hidden under 480 px.':'Одна колонка. План над фото (не прилипает). Фото зала — горизонтальная лента. В шапке логотип и 3 круглые кнопки; счётчик залов скрыт до 480 px.',320,759],
+   ['760–1099',R?'Tablets':'Планшеты','iPad mini, Air, Pro',R?'Two columns in rooms: a sticky floor plan on the left (260 px), photos and cards on the right. Cards in 2–3 columns.':'В залах две колонки: прилипающий план слева (260 px), фото и карточки справа. Карточки в 2–3 колонки.',760,1099],
+   ['1100+',R?'Laptops, desktops':'Ноутбуки, мониторы','1366 … 1920+',R?'Content column 1100 px centred. Cards auto-fill at 220 px minimum. Work window up to 880 px.':'Колонка контента 1100 px по центру. Карточки от 220 px, сколько поместится. Окно работы до 880 px.',1100,1920]];
+  $('#bptable').innerHTML=`<tr><th>px</th><th>${R?'Devices':'Устройства'}</th><th>${R?'Layout':'Раскладка'}</th></tr>`+rows.map(r=>`<tr><td><b>${r[0]}</b><div class="at-bar"><i style="left:${(r[4]-320)/16}%;right:${100-(r[5]-320)/16}%"></i></div></td><td>${r[1]}<br><span class="at-code">${r[2]}</span></td><td>${r[3]}</td></tr>`).join('');}
+function qa(){ const R=AL==='en'; const items=R?['10 resolutions from 320 px to 1920 px: no horizontal scroll, no overlaps, no broken images on every room, thread and work page','All 5 skins: text contrast meets WCAG AA on home, rooms, threads and work windows','Every button and link clicked: plan rooms, theme chips, artist chips, gallery arrows, lightbox, room arrows, keyboard ← →, video tabs, skin menu, language switch','Russian and English: every room, work, history note and "How to look" note exists in both; no stray English on Russian pages','Header buttons at least 38 px for touch','Works in Chrome; please check the iPhone (Safari) visually']:['10 разрешений от 320 до 1920 px: нет горизонтальной прокрутки, наложений и битых картинок на всех залах, нитях и работах','Все 5 скинов: контраст текста по WCAG AA на главной, в залах, нитях и окнах работ','Прокликано всё: залы на плане, темы, работы художников, стрелки галереи, лайтбокс, стрелки залов, клавиши ← →, вкладки видео, меню скинов, смена языка','Русский и английский: у каждого зала и работы есть оба текста, включая «Историю» и «Как смотреть»; на русских страницах нет английского','Кнопки в шапке не меньше 38 px для пальца','Проверено в Chrome; на iPhone (Safari) стоит посмотреть глазами'];
+  $('#qalist').innerHTML=items.map((t,i)=>`<li><b>${i<5?'✓':'!'}</b><span>${t}</span></li>`).join('');}
+function render(){ document.documentElement.lang=AL; document.querySelectorAll('[data-t]').forEach(e=>e.innerHTML=tr(e.dataset.t)); $('#lng').textContent=AL==='en'?'RU':'EN';
+  skinCards(); tokTable(); bp(); qa();
+  skinButtons($('#compskins'),s=>$('#stage').dataset.theme=s,$('#stage').dataset.theme);
+  skinButtons($('#devskins'),s=>{devSkin=s;loadDevs()},devSkin);
+  const dp=$('#devpage').value||'room-7', gp=$('#galpage').value||''; pageOpts($('#devpage'),dp); pageOpts($('#galpage'),gp); }
+$('#lng').onclick=()=>{AL=AL==='en'?'ru':'en'; devLang=AL; $('#devlang').textContent=devLang.toUpperCase(); render(); loadDevs(); phones();};
+$('#devlang').onclick=()=>{devLang=devLang==='ru'?'en':'ru'; $('#devlang').textContent=devLang.toUpperCase(); loadDevs();};
+render(); $('#devpage').onchange=loadDevs; $('#galpage').onchange=phones;
+loadDevs(); phones(); addEventListener('resize',fit);
+</script>
+</body>
+</html>

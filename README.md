@@ -8,7 +8,9 @@ built from photos taken in the exhibition on 15 November 2026.
 - 16 real rooms + **Room 17**, an imagined virtual annex of works not shown in Venice
 - 43 works, each with a concept, a researched history & context note, medium, photos and "in dialogue with" links
 - Russian (default) and English, switchable in the header; texts in `i18n.js`
-- Light and dark themes (follows the phone setting until you pick one with ☀︎ / ☾)
+- 5 skins: Notte (dark), Carta (light), Laguna, Terracotta, High contrast — menu ◐ in the header, or `?skin=laguna` in the URL
+- Tested on 10 resolutions from 320 px phones to 1920 px desktops, iPads included
+- **Design atlas:** `atlas.html` — principles, tokens, typography, components, live device previews. Rebuild with `python3 tools/build-atlas.py`
 - 11 thematic threads (cars & the road, monstrosity, protest, the burning sun, …)
 - Notes on the palazzo itself
 

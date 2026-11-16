@@ -6,7 +6,9 @@
 <meta name="color-scheme" content="dark light">
 <meta name="darkreader-lock">
 <meta name="theme-color" content="#0f0d0c">
-<script>(function(){var t;try{t=localStorage.getItem("hs-theme")}catch(e){}if(!t)t=(window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches)?"light":"dark";document.documentElement.dataset.theme=t;})();</script>
+<script>(function(){var q=new URLSearchParams(location.search),t=q.get("skin");try{if(!t)t=localStorage.getItem("hs-theme")}catch(e){}
+var ok=["dark","light","laguna","terracotta","contrast"];if(ok.indexOf(t)<0)t=(window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches)?"light":"dark";
+document.documentElement.dataset.theme=t;window.HS_URLSKIN=!!q.get("skin");window.HS_NOGATE=q.get("nogate")==="1";window.HS_URLLANG=q.get("lang");})();</script>
 <title>Helter Skelter — a virtual visit</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;900&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;1,9..144,400&display=swap" rel="stylesheet">
@@ -16,6 +18,7 @@
   --bg:#0f0d0c; --panel:#191614; --panel2:#221e1b; --ink:#f1ebe3; --mute:#a59c92; --line:#3a332e;
   --aj:#4f7fe0; --rp:#e2752d; --ot:#9a9188; --gold:#c9a45c;
   --text2:#ddd4ca; --barbg:rgba(15,13,12,.88); --shade:rgba(5,4,4,.82); --hover:#6b5f55;
+  --pl-water:#16242e; --pl-wave:#2f5670; --pl-canal:#9cc0d9; --pl-solid:#171412; --pl-solidS:#3d352f; --pl-rm:#26211d; --pl-seen:#2c2a24; --pl-cur:#5a3216; --pl-stroke:#6b5f55; --pl-curS:#e2752d; --pl-lbl:#f1ebe3; --pl-sub:#a59c92; --pl-ent:#c9a45c;
   --sat:env(safe-area-inset-top,0px); --sab:env(safe-area-inset-bottom,0px);
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -30,10 +33,10 @@ img{display:block;max-width:100%}
 /* top bar */
 .bar{position:sticky;top:0;z-index:30;background:var(--barbg);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 .bar .wrap{display:flex;align-items:center;gap:12px;height:54px}
-.logo{font-weight:900;letter-spacing:.02em;text-transform:uppercase;font-size:15px;white-space:nowrap;cursor:pointer}
+.logo{display:flex;align-items:center;min-height:40px;font-weight:900;letter-spacing:.02em;text-transform:uppercase;font-size:15px;white-space:nowrap;cursor:pointer}
 .logo span{color:var(--rp)} .logo i{color:var(--aj);font-style:normal}
 .bar .sp{flex:1}
-.pill{border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:13px;white-space:nowrap}
+.pill{border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:13px;white-space:nowrap;min-height:38px;min-width:38px;display:inline-flex;align-items:center;justify-content:center}
 .pill:hover{border-color:var(--ink)}
 .prog{font-size:12px;color:var(--mute);white-space:nowrap}
 @media(max-width:480px){.prog{display:none}.bar .wrap{gap:8px}.pill{padding:6px 10px}}
@@ -74,7 +77,7 @@ svg.plan{position:absolute;top:0;left:0;width:100%;height:100%;display:block;tou
 
 /* building */
 .bld{display:grid;grid-template-columns:1.1fr 1fr;gap:24px;align-items:start}
-@media(max-width:820px){.bld{grid-template-columns:1fr}}
+@media(max-width:759px){.bld{grid-template-columns:1fr}}
 .bld img{border-radius:14px;width:100%;aspect-ratio:3/4;object-fit:cover;cursor:zoom-in}
 .facts li{list-style:none;padding:12px 0;border-top:1px solid var(--line);color:var(--text2)}
 .facts li:first-child{border-top:0}
@@ -119,7 +122,7 @@ svg.plan{position:absolute;top:0;left:0;width:100%;height:100%;display:block;tou
 .ph{aspect-ratio:2/1;display:flex;flex-direction:column;justify-content:space-between;padding:14px;position:relative;overflow:hidden}
 .ph .big{font:900 34px/1 Archivo;opacity:.9}
 .ph .ic{font-size:12px;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
-.ph.cover{justify-content:space-between}.ph.cover .ic:empty{display:none}.ph.cover .ic{background:rgba(0,0,0,.55);color:#fff;align-self:flex-start;padding:4px 8px;border-radius:6px;position:relative;z-index:1}
+.ph.cover{justify-content:space-between}.ph.cover .ic:empty{visibility:hidden;padding:0}.ph.cover .ic{background:rgba(0,0,0,.55);color:#fff;align-self:flex-start;padding:4px 8px;border-radius:6px;position:relative;z-index:1}
 .cvtitle{font:700 22px/1.1 Fraunces,serif;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.8);position:relative;z-index:1}
 .cvyear{font-size:12px;color:#f1ebe3;letter-spacing:.08em;text-shadow:0 1px 6px rgba(0,0,0,.9);position:relative;z-index:1}
 .ph:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(115deg,transparent 0 14px,rgba(255,255,255,.04) 14px 15px)}
@@ -192,17 +195,40 @@ svg.plan{position:absolute;top:0;left:0;width:100%;height:100%;display:block;tou
 .foot{padding:30px 0 calc(40px + var(--sab));color:var(--mute);font-size:13px}
 .foot a{color:var(--mute)}
 .hidden{display:none!important}
-@media(max-width:820px){.roomgrid{display:block}.roomgrid .mini{position:static!important;top:auto;width:220px!important;max-width:100%;margin:0 auto 18px}}
+@media(max-width:759px){.roomgrid{display:block}.roomgrid .mini{position:static!important;top:auto;width:220px!important;max-width:100%;margin:0 auto 18px}}
+ [data-theme="laguna"]{color-scheme:dark;
+  --bg:#071a1f; --panel:#0d262c; --panel2:#123139; --ink:#e6f2f1; --mute:#8fb1b2; --line:#24464d;
+  --aj:#7aa8ff; --rp:#ff9a62; --ot:#9cb3b3; --gold:#e8c873;
+  --text2:#cfe3e1; --barbg:rgba(7,26,31,.88); --shade:rgba(2,10,12,.85); --hover:#4b7c83;
+  --pl-water:#0f4c5c; --pl-wave:#3f8a9c; --pl-canal:#cdeff3; --pl-solid:#0a2025; --pl-solidS:#24464d; --pl-rm:#123139; --pl-seen:#18403f; --pl-cur:#6b3a1e; --pl-stroke:#4b7c83; --pl-curS:#ff9a62; --pl-lbl:#e6f2f1; --pl-sub:#8fb1b2; --pl-ent:#e8c873;}
+ [data-theme="terracotta"]{color-scheme:light;
+  --bg:#efe1cf; --panel:#f8ede0; --panel2:#e6d2bb; --ink:#2a1610; --mute:#6e4f3e; --line:#d4b99c;
+  --aj:#1f4fa8; --rp:#a8380f; --ot:#6d5546; --gold:#7d500f;
+  --text2:#4a2e22; --barbg:rgba(239,225,207,.92); --shade:rgba(60,30,18,.55); --hover:#b58d6c;
+  --pl-water:#b9d3d8; --pl-wave:#7da7b0; --pl-canal:#244e58; --pl-solid:#dcc3a6; --pl-solidS:#c3a483; --pl-rm:#f8ede0; --pl-seen:#ead7bf; --pl-cur:#e9a37c; --pl-stroke:#a98667; --pl-curS:#a8380f; --pl-lbl:#2a1610; --pl-sub:#6e4f3e; --pl-ent:#7d500f;}
+ [data-theme="contrast"]{color-scheme:dark;
+  --bg:#000; --panel:#0b0b0b; --panel2:#161616; --ink:#fff; --mute:#d6d6d6; --line:#7a7a7a;
+  --aj:#7fb2ff; --rp:#ffd400; --ot:#e0e0e0; --gold:#ffd400;
+  --text2:#f2f2f2; --barbg:rgba(0,0,0,.95); --shade:rgba(0,0,0,.9); --hover:#ffd400;
+  --pl-water:#003a63; --pl-wave:#3d8fd1; --pl-canal:#fff; --pl-solid:#000; --pl-solidS:#5a5a5a; --pl-rm:#111; --pl-seen:#262626; --pl-cur:#5c4c00; --pl-stroke:#9a9a9a; --pl-curS:#ffd400; --pl-lbl:#fff; --pl-sub:#d6d6d6; --pl-ent:#ffd400;}
+ [data-theme="contrast"] .pill,[data-theme="contrast"] .card,[data-theme="contrast"] .chip{border-width:2px}
  [data-theme="light"]{color-scheme:light;
   --bg:#f6f1ea; --panel:#fffdf9; --panel2:#efe8de; --ink:#1c1714; --mute:#6c6359; --line:#ddd3c7;
-  --aj:#2f5fc4; --rp:#c25a14; --ot:#6f675f; --gold:#8a6a24;
-  --text2:#3a322c; --barbg:rgba(246,241,234,.9); --shade:rgba(40,32,26,.55); --hover:#b9ab9b;}
+  --aj:#2f5fc4; --rp:#a94c0e; --ot:#6f675f; --gold:#755818;
+  --text2:#3a322c; --barbg:rgba(246,241,234,.9); --shade:rgba(40,32,26,.55); --hover:#b9ab9b;
+  --pl-water:#d3e3ec; --pl-wave:#8fb3c9; --pl-canal:#2f5b75; --pl-solid:#ddd3c5; --pl-solidS:#c8bcad; --pl-rm:#f4ede3; --pl-seen:#e4d9ca; --pl-cur:#f2c49c; --pl-stroke:#a99a8a; --pl-curS:#c25a14; --pl-lbl:#1c1714; --pl-sub:#6c6359; --pl-ent:#8a6a24;}
 .hero{color:#f1ebe3}.hero h1{color:#f1ebe3}
 .hero .btn{background:#f1ebe3;color:#111}.hero .btn.ghost{background:transparent;color:#f1ebe3;border-color:#f1ebe3}
 .hero .kicker{color:#e0bf7a}
 .ph{color:#f1ebe3}
 .vtabs button{color:#f1ebe3}.vtabs button.on{background:#f1ebe3;color:#111;border-color:#f1ebe3}
-.themebtn{width:34px;height:34px;padding:0;display:inline-flex;align-items:center;justify-content:center;font-size:16px}
+.skinwrap{position:relative}
+.skinmenu{display:none;position:absolute;right:0;top:42px;min-width:200px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:6px;box-shadow:0 12px 40px rgba(0,0,0,.35);z-index:40}
+.skinmenu.open{display:block}
+.skinmenu button{display:flex;align-items:center;gap:10px;width:100%;padding:9px 10px;border-radius:9px;text-align:left;font-size:14px}
+.skinmenu button:hover,.skinmenu button.on{background:var(--panel2)}
+.skinmenu i{width:22px;height:22px;border-radius:50%;flex:0 0 auto;border:1px solid rgba(128,128,128,.4)}
+.themebtn{width:38px;height:38px;padding:0;display:inline-flex;align-items:center;justify-content:center;font-size:16px}
 </style>
 </head>
 <body>
@@ -220,7 +246,7 @@ svg.plan{position:absolute;top:0;left:0;width:100%;height:100%;display:block;tou
   <div class="logo" onclick="go('')">Helter <span>Skel</span><i>ter</i></div>
   <div class="sp"></div>
   <span class="prog" id="prog"></span>
-  <button class="pill themebtn" id="themebtn" onclick="toggleTheme()" aria-label="Theme">☀︎</button>
+  <div class="skinwrap"><button class="pill themebtn" id="themebtn" onclick="toggleSkinMenu(event)" aria-label="Skin" aria-haspopup="true">◐</button><div class="skinmenu" id="skinmenu" role="menu"></div></div>
   <button class="pill" id="langbtn" onclick="setLang(LANG==='ru'?'en':'ru')">EN</button>
   <button class="pill" onclick="go('map')" data-i18n="map">Map</button>
 </div></header>
@@ -353,6 +379,7 @@ const EN = {
 const RUX = {concept:"Концепция", look:"Как смотреть", imgSearch:"Изображения работы в интернете ↗", nameAJ:"Артур Джафа", nameRP:"Ричард Принс", pCanal:"Гранд-канал", pStairs:"ЛЕСТНИЦА", pEntrance:"ВХОД", p_ANDRONE:"АНДРОНЕ", p_COURTYARD:"ДВОР", p_PORTEGO:"ПОРТЕГО"};
 const RU = window.HS_RU;
 let LANG='ru'; try{ LANG = localStorage.getItem('hs-lang') || 'ru'; }catch(e){}
+if(window.HS_URLLANG==='en'||window.HS_URLLANG==='ru') LANG=window.HS_URLLANG;
 function t(k,...a){ const d = LANG==='ru' ? (RU.ui[k]!==undefined?RU.ui[k]:RUX[k]) : EN[k]; const v = d===undefined?EN[k]:d; return typeof v==='function'?v(...a):v; }
 const L = {
   rName:r=> LANG==='ru'&&RU.rooms[r.id]?RU.rooms[r.id].name:r.name,
@@ -380,15 +407,26 @@ function buildHome(){
     $('#'+k.toLowerCase()+'list').innerHTML = H.works.filter(w=>w.artist===k&&!w.virtual).map(w=>`<button class="chip sm" onclick="openWork('${w.id}')">${esc(w.title)}</button>`).join('');
   });
 }
-function themeIcon(){ const th=document.documentElement.dataset.theme; $('#themebtn').textContent = th==='light'?'☾':'☀︎'; $('#themebtn').title = th==='light'?(LANG==='ru'?'Тёмная тема':'Dark theme'):(LANG==='ru'?'Светлая тема':'Light theme');
-  const m=document.querySelector('meta[name=theme-color]'); if(m) m.content = th==='light'?'#f6f1ea':'#0f0d0c'; }
-function toggleTheme(){ const n=document.documentElement.dataset.theme==='light'?'dark':'light'; document.documentElement.dataset.theme=n; try{localStorage.setItem('hs-theme',n)}catch(e){}
-  themeIcon(); drawPlans(); const h=location.hash.slice(1); if(h.startsWith('room-')){ const y=scrollY; showRoom(h.slice(5)); scrollTo(0,y); } }
-function setLang(l){ LANG=l; try{localStorage.setItem('hs-lang',l)}catch(e){} applyStatic(); buildHome(); const h=location.hash.slice(1); if(h.startsWith('work-')) renderWork(h.slice(5)); else route(); }
+const SKINS=[
+  {id:'dark',en:'Notte · dark',ru:'Ночь · тёмная',sw:'linear-gradient(135deg,#0f0d0c 50%,#e2752d 50%)'},
+  {id:'light',en:'Carta · light',ru:'Бумага · светлая',sw:'linear-gradient(135deg,#f6f1ea 50%,#c25a14 50%)'},
+  {id:'laguna',en:'Laguna',ru:'Лагуна',sw:'linear-gradient(135deg,#071a1f 50%,#3f8a9c 50%)'},
+  {id:'terracotta',en:'Terracotta',ru:'Терракота',sw:'linear-gradient(135deg,#efe1cf 50%,#a8380f 50%)'},
+  {id:'contrast',en:'High contrast',ru:'Высокий контраст',sw:'linear-gradient(135deg,#000 50%,#ffd400 50%)'}];
+function themeIcon(){ const th=document.documentElement.dataset.theme;
+  $('#themebtn').title = LANG==='ru'?'Скин':'Skin';
+  $('#skinmenu').innerHTML = SKINS.map(k=>`<button role="menuitem" class="${k.id===th?'on':''}" onclick="setSkin('${k.id}')"><i style="background:${k.sw}"></i>${LANG==='ru'?k.ru:k.en}</button>`).join('');
+  const m=document.querySelector('meta[name=theme-color]'); if(m) m.content = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim(); }
+function toggleSkinMenu(e){ e.stopPropagation(); $('#skinmenu').classList.toggle('open'); }
+document.addEventListener('click',e=>{ const m=$('#skinmenu'); if(m&&!e.target.closest('.skinwrap')) m.classList.remove('open'); });
+function setSkin(n){ document.documentElement.dataset.theme=n; try{ if(!window.HS_URLSKIN) localStorage.setItem('hs-theme',n)}catch(e){}
+  $('#skinmenu').classList.remove('open'); themeIcon(); drawPlans(); const h=location.hash.slice(1); if(h.startsWith('room-')){ const y=scrollY; showRoom(h.slice(5)); scrollTo(0,y); } }
+function toggleTheme(){ setSkin(document.documentElement.dataset.theme==='light'?'dark':'light'); }
+function setLang(l){ LANG=l; try{ if(!window.HS_URLLANG) localStorage.setItem('hs-lang',l)}catch(e){} applyStatic(); buildHome(); const h=location.hash.slice(1); if(h.startsWith('work-')) renderWork(h.slice(5)); else route(); }
 
 /* gate */
 let gateOK=false; try{gateOK=localStorage.getItem('hs-gate')==='1'}catch(e){}
-if(gateOK) $('#gate').remove();
+if(gateOK||window.HS_NOGATE) $('#gate').remove();
 else $('#enter').onclick=()=>{ try{localStorage.setItem('hs-gate','1')}catch(e){} $('#gate').remove(); };
 
 /* ---------- floor plans ---------- */
@@ -405,9 +443,8 @@ const FIRST = [
 ];
 const FIRST_SOLID=[{x:18,y:436,w:182,h:74}];
 function roomArtists(id){ const s=new Set(H.works.filter(w=>w.room===id).map(w=>w.artist)); return s; }
-function pal(){ return document.documentElement.dataset.theme==='light'
-  ? {water:'#d3e3ec',wave:'#8fb3c9',canal:'#2f5b75',solid:'#ddd3c5',solidS:'#c8bcad',rm:'#f4ede3',seen:'#e4d9ca',cur:'#f2c49c',stroke:'#a99a8a',curS:'#c25a14',lbl:'#1c1714',sub:'#6c6359',stairs:'#a99a8a',ent:'#8a6a24',aj:'#2f5fc4',rp:'#c25a14'}
-  : {water:'#16242e',wave:'#2f5670',canal:'#9cc0d9',solid:'#171412',solidS:'#3d352f',rm:'#26211d',seen:'#2c2a24',cur:'#5a3216',stroke:'#6b5f55',curS:'#e2752d',lbl:'#f1ebe3',sub:'#a59c92',stairs:'#6b5f55',ent:'#c9a45c',aj:'#4f7fe0',rp:'#e2752d'}; }
+function pal(){ const cs=getComputedStyle(document.documentElement), v=k=>cs.getPropertyValue(k).trim();
+  return {water:v('--pl-water'),wave:v('--pl-wave'),canal:v('--pl-canal'),solid:v('--pl-solid'),solidS:v('--pl-solidS'),rm:v('--pl-rm'),seen:v('--pl-seen'),cur:v('--pl-cur'),stroke:v('--pl-stroke'),curS:v('--pl-curS'),lbl:v('--pl-lbl'),sub:v('--pl-sub'),stairs:v('--pl-stroke'),ent:v('--pl-ent'),aj:v('--aj'),rp:v('--rp')}; }
 function plan(rooms,solid,floor,cur,small){
   const P=pal();
   let s=`<div class="planbox"><svg class="plan" viewBox="0 0 300 520" preserveAspectRatio="xMidYMid meet" role="img" aria-label="${floor}">
@@ -503,7 +540,7 @@ function showRoom(id){
 function showThread(k){
   const th=H.themes[k]; if(!th) return go('');
   const ws=H.works.filter(w=>w.themes.includes(k)).sort((a,b)=>order.indexOf(a.room)-order.indexOf(b.room));
-  $('#threadwrap').innerHTML=`<div class="room-head"><span class="tag" style="color:${th.color}">${t('thread')}</span><h2>${esc(L.theme(k))}</h2>
+  $('#threadwrap').innerHTML=`<div class="room-head"><span class="tag"><i style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${th.color};margin-right:6px"></i>${t('thread')}</span><h2>${esc(L.theme(k))}</h2>
   <p class="lead">${t('threadLead',ws.length,ws.filter(w=>w.artist==='AJ').length,ws.filter(w=>w.artist==='RP').length)}</p>
   <div class="chips">${Object.entries(H.themes).map(([kk,tt])=>`<button class="chip sm" style="${kk===k?'border-color:'+tt.color:''}" onclick="go('thread-${kk}')"><i style="background:${tt.color}"></i>${esc(L.theme(kk))}</button>`).join('')}</div></div>
   <div class="works">${ws.map(card).join('')}</div>`;
