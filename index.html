@@ -157,6 +157,23 @@ svg.plan{position:absolute;top:0;left:0;width:100%;height:100%;display:block;tou
 .sbody .yr{color:var(--mute)}
 .sbody .med{font-size:13px;color:var(--mute);margin:10px 0 4px;padding-left:10px;border-left:2px solid var(--line)}
 .sbody .concept{font:400 18px/1.6 Fraunces,serif;color:var(--ink)}
+.gl{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;text-decoration:underline dotted;text-decoration-color:var(--gold);text-decoration-thickness:1.5px;text-underline-offset:3px}
+.gl:hover,.gl:focus-visible{color:var(--gold)}
+.glpop{position:fixed;z-index:70;width:min(380px,calc(100vw - 24px));max-height:min(70vh,560px);overflow-y:auto;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-top:4px solid var(--gold);border-radius:14px;box-shadow:0 18px 50px rgba(0,0,0,.45);padding:16px 18px 18px;display:none}
+.glpop.open{display:block;animation:fade .15s}
+.glpop .gc{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:700}
+.glpop h4{font:700 19px/1.25 Fraunces,serif;margin:4px 30px 10px 0}
+.glpop h6{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);margin:12px 0 4px}
+.glpop p{font-size:14.5px;line-height:1.6;color:var(--text2)}
+.glpop .gx{position:absolute;top:10px;right:10px;width:34px;height:34px;border-radius:50%;font-size:20px;color:var(--mute)}
+.glpop a{display:inline-block;margin-top:12px;color:var(--gold);font-size:13px}
+@media(max-width:600px){.glpop{left:0!important;right:0;bottom:0;top:auto!important;width:100%;border-radius:18px 18px 0 0;max-height:72vh;padding-bottom:calc(18px + var(--sab))}}
+.glist{columns:2 320px;column-gap:28px;margin-top:18px}
+.glist .gitem{break-inside:avoid;padding:12px 0;border-bottom:1px solid var(--line)}
+.glist h4{font:700 17px Fraunces;margin-bottom:4px}
+.glist p{font-size:14px;color:var(--text2);line-height:1.55}
+.glist p+p{margin-top:6px}
+.glsearch{width:100%;max-width:480px;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:11px 16px;font:inherit;font-size:15px;margin:6px 0 10px}
 .voice{margin:22px 0 4px;max-width:760px;border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:14px;padding:16px 18px;background:var(--panel)}
 .voice .vk{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:8px}
 .voice blockquote{font:italic 400 20px/1.45 Fraunces,serif;color:var(--ink);margin:0 0 6px}
@@ -291,6 +308,8 @@ svg.plan{position:absolute;top:0;left:0;width:100%;height:100%;display:block;tou
     <div class="chips" id="themechips"></div>
   </div></section>
 
+  <section><div class="wrap" id="glhome"></div></section>
+
   <section id="building"><div class="wrap bld">
     <div class="pics">
       <img src="img/androne-view.jpg" alt="Looking down into the androne with Big Wheel II" data-lb>
@@ -324,6 +343,8 @@ svg.plan{position:absolute;top:0;left:0;width:100%;height:100%;display:block;tou
 
 <main id="room"><div class="wrap" id="roomwrap"></div></main>
 <main id="thread"><div class="wrap" id="threadwrap"></div></main>
+<main id="glossary" style="display:none"><div class="wrap" id="glosswrap" style="padding-bottom:40px"></div></main>
+<div class="glpop" id="glpop" role="dialog" aria-modal="false"></div>
 
 <div class="modal" id="modal"><div class="sheet" id="sheet"></div></div>
 <div class="lb" id="lb"><img id="lbimg" alt=""></div>
@@ -337,6 +358,7 @@ svg.plan{position:absolute;top:0;left:0;width:100%;height:100%;display:block;tou
 <script src="i18n.js"></script>
 <script src="look.js"></script>
 <script src="voice.js"></script>
+<script src="glossary.js"></script>
 <script>
 const H = window.HS;
 const W = Object.fromEntries(H.works.map(w=>[w.id,w]));
@@ -382,10 +404,10 @@ const EN = {
   clipBadge:"▶ my clip", ytBadge:"▶ YouTube", ytMore:"YouTube & more",
   phVideo:"▶ video", phVirtual:"◇ not in Venice", phNone:"not photographed · tap for the story", langBtn:"RU",
   nameAJ:"Arthur Jafa", nameRP:"Richard Prince",
-  concept:"Concept", look:"How to look", voice:"Voice of the exhibition", vWall:n=>`Wall text, room ${n} · Fondazione Prada, curated by Nancy Spector`, vBook:"Exhibition booklet · Fondazione Prada, curated by Nancy Spector", vRetold:"In short (our summary):", vNone:"We didn't photograph the wall text in this room.", vSame:"This room is described in the courtyard text (room 1).", vMore:"Full texts on the Fondazione Prada website ↗", vTr:"", imgSearch:"See images of this work online ↗",
+  concept:"Concept", look:"How to look", glWhat:"What it is", glHere:"Why it matters here", glWiki:"Read on Wikipedia ↗", glTitle:"Glossary", glKick:"Who, what, when", glLead:"Names, artworks, films, songs and events mentioned in the texts. In the texts these words are underlined with dots — tap one to see its card.", glSearch:"Search the glossary…", glOpen:"Open the glossary →", glHome:"Underlined words in the texts open a short card: what it is and why it matters for the show.", voice:"Voice of the exhibition", vWall:n=>`Wall text, room ${n} · Fondazione Prada, curated by Nancy Spector`, vBook:"Exhibition booklet · Fondazione Prada, curated by Nancy Spector", vRetold:"In short (our summary):", vNone:"We didn't photograph the wall text in this room.", vSame:"This room is described in the courtyard text (room 1).", vMore:"Full texts on the Fondazione Prada website ↗", vTr:"", imgSearch:"See images of this work online ↗",
   pCanal:"Grand Canal", pStairs:"STAIRS", pEntrance:"ENTRANCE", p_ANDRONE:"ANDRONE", p_COURTYARD:"COURTYARD", p_PORTEGO:"PORTEGO"
 };
-const RUX = {concept:"Концепция", look:"Как смотреть", voice:"Голос выставки", vWall:n=>`Настенный текст зала ${n} · Fondazione Prada, куратор Нэнси Спектор`, vBook:"Буклет выставки · Fondazione Prada, куратор Нэнси Спектор", vRetold:"Коротко (наш пересказ):", vNone:"Текст этого зала мы не сфотографировали.", vSame:"Этот зал описан в тексте двора (зал 1).", vMore:"Полные тексты — на сайте Fondazione Prada ↗", vTr:" · перевод цитаты наш", imgSearch:"Изображения работы в интернете ↗", nameAJ:"Артур Джафа", nameRP:"Ричард Принс", pCanal:"Гранд-канал", pStairs:"ЛЕСТНИЦА", pEntrance:"ВХОД", p_ANDRONE:"АНДРОНЕ", p_COURTYARD:"ДВОР", p_PORTEGO:"ПОРТЕГО"};
+const RUX = {concept:"Концепция", look:"Как смотреть", glWhat:"Что это", glHere:"Причём здесь", glWiki:"Читать в Википедии ↗", glTitle:"Словарь", glKick:"Кто, что, когда", glLead:"Имена, картины, фильмы, песни и события, которые упоминаются в текстах. В самих текстах эти слова подчёркнуты точками — нажмите, чтобы увидеть карточку.", glSearch:"Поиск по словарю…", glOpen:"Открыть словарь →", glHome:"Подчёркнутые слова в текстах открывают короткую карточку: что это и причём здесь выставка.", voice:"Голос выставки", vWall:n=>`Настенный текст зала ${n} · Fondazione Prada, куратор Нэнси Спектор`, vBook:"Буклет выставки · Fondazione Prada, куратор Нэнси Спектор", vRetold:"Коротко (наш пересказ):", vNone:"Текст этого зала мы не сфотографировали.", vSame:"Этот зал описан в тексте двора (зал 1).", vMore:"Полные тексты — на сайте Fondazione Prada ↗", vTr:" · перевод цитаты наш", imgSearch:"Изображения работы в интернете ↗", nameAJ:"Артур Джафа", nameRP:"Ричард Принс", pCanal:"Гранд-канал", pStairs:"ЛЕСТНИЦА", pEntrance:"ВХОД", p_ANDRONE:"АНДРОНЕ", p_COURTYARD:"ДВОР", p_PORTEGO:"ПОРТЕГО"};
 const RU = window.HS_RU;
 let LANG='ru'; try{ LANG = localStorage.getItem('hs-lang') || 'ru'; }catch(e){}
 if(window.HS_URLLANG==='en'||window.HS_URLLANG==='ru') LANG=window.HS_URLLANG;
@@ -411,7 +433,8 @@ function applyStatic(){
 }
 function buildHome(){
   const hv=document.getElementById('homevoice'); if(hv) hv.innerHTML=voiceBlock('0');
-  $('#facts').innerHTML = L.facts().map(f=>`<li>${esc(f)}</li>`).join('');
+  $('#facts').innerHTML = L.facts().map(f=>`<li>${gl(esc(f))}</li>`).join('');
+  const gh=document.getElementById('glhome'); if(gh) gh.innerHTML=`<div class="kicker">${t('glKick')}</div><h2>${t('glTitle')}</h2><p class="lead">${t('glHome')}</p><button class="btn ghost" style="color:var(--ink);border-color:var(--ink)" onclick="go('glossary')">${t('glOpen')}</button>`;
   $('#themechips').innerHTML = Object.entries(H.themes).map(([k,th])=>`<button class="chip" onclick="go('thread-${k}')"><i style="background:${th.color}"></i>${esc(L.theme(k))} <span style="color:var(--mute)">${H.works.filter(w=>w.themes.includes(k)).length}</span></button>`).join('');
   ['AJ','RP'].forEach(k=>{
     $('#'+k.toLowerCase()+'list').innerHTML = H.works.filter(w=>w.artist===k&&!w.virtual).map(w=>`<button class="chip sm" onclick="openWork('${w.id}')">${esc(w.title)}</button>`).join('');
@@ -425,10 +448,40 @@ const SKINS=[
   {id:'contrast',en:'High contrast',ru:'Высокий контраст',sw:'linear-gradient(135deg,#000 50%,#ffd400 50%)'}];
 function voiceBlock(id){ const V=window.HS_VOICE, v=V.rooms[id], ru=LANG==='ru';
   let inner='';
-  if(v&&v.q_en){ inner=`<blockquote>«${esc(ru?v.q_ru:v.q_en)}»</blockquote>${ru?`<div class="vsrc" style="margin-bottom:2px">“${esc(v.q_en)}”</div>`:''}<div class="vsrc">— ${id==='0'?t('vBook'):t('vWall',id)}${t('vTr')}</div><p><b>${t('vRetold')}</b> ${esc(ru?v.s_ru:v.s_en)}</p>`; }
-  else if(v){ inner=`<p>${t('vSame')} ${esc(ru?v.s_ru:v.s_en)}</p>`; }
+  if(v&&v.q_en){ inner=`<blockquote>«${esc(ru?v.q_ru:v.q_en)}»</blockquote>${ru?`<div class="vsrc" style="margin-bottom:2px">“${esc(v.q_en)}”</div>`:''}<div class="vsrc">— ${id==='0'?t('vBook'):t('vWall',id)}${t('vTr')}</div><p><b>${t('vRetold')}</b> ${gl(esc(ru?v.s_ru:v.s_en))}</p>`; }
+  else if(v){ inner=`<p>${t('vSame')} ${gl(esc(ru?v.s_ru:v.s_en))}</p>`; }
   else inner=`<p>${t('vNone')}</p>`;
   return `<div class="voice"><div class="vk">${t('voice')}</div>${inner}<a href="${V.official}" target="_blank" rel="noopener">${t('vMore')}</a></div>`; }
+/* ---------- glossary ---------- */
+const GL = window.HS_GLOSS||[], GLI = Object.fromEntries(GL.map(g=>[g.id,g]));
+const GLRX = {};
+function glRx(){ if(GLRX[LANG]) return GLRX[LANG]; const ents=GL.filter(g=>(g[LANG]||[]).length);
+  const src='(^|[^\\p{L}\\p{N}])(?:'+ents.map(g=>'('+g[LANG].join('|')+')').join('|')+')(?![\\p{L}])';
+  return GLRX[LANG]={rx:new RegExp(src,'gu'),ids:ents.map(g=>g.id)}; }
+function gl(html){ if(!GL.length) return html; const {rx,ids}=glRx(), used=new Set();
+  return html.replace(rx,(m,pre,...gs)=>{ const i=gs.findIndex((x,k)=>k<ids.length&&x!==undefined); if(i<0) return m; const id=ids[i];
+    if(used.has(id)) return m; used.add(id); return `${pre}<button type="button" class="gl" data-g="${id}">${gs[i]}</button>`; }); }
+function gT(g,f){ return g[f+'_'+(LANG==='ru'?'ru':'en')]; }
+function wiki(g){ return LANG==='ru'?`https://ru.wikipedia.org/w/index.php?search=${encodeURIComponent(g.qr||g.q)}`:`https://en.wikipedia.org/w/index.php?search=${encodeURIComponent(g.q)}`; }
+function glCard(g){ const cat=window.HS_GLOSS_CATS[g.c]; return `<div class="gc">${cat?cat[LANG==='ru'?1:0]:''}</div><h4>${esc(gT(g,'t'))}</h4><h6>${t('glWhat')}</h6><p>${esc(gT(g,'w'))}</p><h6>${t('glHere')}</h6><p>${esc(gT(g,'h'))}</p><a href="${wiki(g)}" target="_blank" rel="noopener">${t('glWiki')}</a>`; }
+function openGl(btn){ const g=GLI[btn.dataset.g]; if(!g) return; const p=$('#glpop');
+  p.innerHTML=glCard(g)+`<button class="gx" aria-label="Close" onclick="closeGl()">×</button>`; p.classList.add('open'); p.scrollTop=0;
+  if(innerWidth>600){ const r=btn.getBoundingClientRect(), pw=p.offsetWidth, ph=p.offsetHeight;
+    let x=Math.min(Math.max(12,r.left), innerWidth-pw-12), y=r.bottom+8; if(y+ph>innerHeight-12) y=Math.max(12,r.top-ph-8);
+    p.style.left=x+'px'; p.style.top=y+'px'; } else { p.style.left=''; p.style.top=''; }
+  p.querySelector('.gx').focus({preventScroll:true}); }
+function closeGl(){ $('#glpop').classList.remove('open'); }
+document.addEventListener('click',e=>{ const b=e.target.closest('.gl'); if(b){ e.preventDefault(); e.stopPropagation(); openGl(b); return; }
+  if(!e.target.closest('#glpop')) closeGl(); },true);
+addEventListener('scroll',()=>{ if(innerWidth>600) closeGl(); },{passive:true});
+function showGlossary(q){ const ru=LANG==='ru', cats=window.HS_GLOSS_CATS;
+  const items=GL.slice().sort((a,b)=>gT(a,'t').localeCompare(gT(b,'t'),LANG));
+  const render=f=>{ const fl=(f||'').toLowerCase();
+    return Object.keys(cats).map(c=>{ const xs=items.filter(g=>g.c===c&&(!fl||(gT(g,'t')+' '+gT(g,'w')).toLowerCase().includes(fl)));
+      if(!xs.length) return ''; return `<h3 class="kicker" style="margin-top:28px">${cats[c][ru?1:0]}</h3><div class="glist">${xs.map(g=>`<div class="gitem" id="g-${g.id}"><h4>${esc(gT(g,'t'))}</h4><p>${esc(gT(g,'w'))}</p><p><b>${t('glHere')}:</b> ${esc(gT(g,'h'))}</p><a class="ext" style="margin-top:6px;font-size:13px" href="${wiki(g)}" target="_blank" rel="noopener">${t('glWiki')}</a></div>`).join('')}</div>`; }).join(''); };
+  $('#glosswrap').innerHTML=`<div class="room-head"><span class="tag">${t('glKick')}</span><h2>${t('glTitle')}</h2><p class="lead">${t('glLead')}</p><input class="glsearch" id="glq" type="search" placeholder="${t('glSearch')}" value="${esc(q||'')}"></div><div id="glres">${render(q)}</div>`;
+  $('#glq').oninput=e=>{ $('#glres').innerHTML=render(e.target.value); };
+  view('glossary'); window.scrollTo(0,0); }
 function themeIcon(){ const th=document.documentElement.dataset.theme;
   $('#themebtn').title = LANG==='ru'?'Скин':'Skin';
   $('#skinmenu').innerHTML = SKINS.map(k=>`<button role="menuitem" class="${k.id===th?'on':''}" onclick="setSkin('${k.id}')"><i style="background:${k.sw}"></i>${LANG==='ru'?k.ru:k.en}</button>`).join('');
@@ -536,7 +589,7 @@ function showRoom(id){
       <h2>${esc(L.rName(r))}</h2>
       <div style="color:var(--mute);font-size:14px">${t('works',works.length)} · ${[...roomArtists(id)].map(k=>`<b style="color:${COL[k]}">${artistLabel(k)}</b>`).join(' & ')}</div>
     </div>
-    <p class="room-intro">${esc(L.rIntro(r))}</p>
+    <p class="room-intro">${gl(esc(L.rIntro(r)))}</p>
     ${id!=='17'?voiceBlock(id):''}
     <div class="roomgrid">
       <div class="mini">${mini}</div>
@@ -581,9 +634,9 @@ function renderWork(id){
     <div class="yr">${esc(w.year)}${w.count?' · '+L.w(w,'count'):''} · ${w.room==='17'?t('room17'):t('roomCap')+' '+w.room+(/^(Room|Зал) \d/.test(L.rName(R[w.room]))?'':' · '+esc(L.rName(R[w.room])))}</div>
     <div class="med">${esc(L.w(w,'medium'))}</div>
     <h5>${t('concept')}</h5>
-    <p class="concept">${esc(L.w(w,'concept'))}</p>
-    ${window.HS_LOOK[w.id]?`<h5>${t('look')}</h5><p class="looktext">${esc(window.HS_LOOK[w.id][LANG])}</p>`:''}
-    ${L.bg(w)?`<h5>${t('history')}</h5><p class="bgtext">${esc(L.bg(w))}</p>`:''}
+    <p class="concept">${gl(esc(L.w(w,'concept')))}</p>
+    ${window.HS_LOOK[w.id]?`<h5>${t('look')}</h5><p class="looktext">${gl(esc(window.HS_LOOK[w.id][LANG]))}</p>`:''}
+    ${L.bg(w)?`<h5>${t('history')}</h5><p class="bgtext">${gl(esc(L.bg(w)))}</p>`:''}
     <a class="ext" href="https://www.google.com/search?tbm=isch&q=${encodeURIComponent((w.artistName||A[w.artist])+' '+w.title+' '+w.year.replace(/[^0-9–-]/g,''))}" target="_blank" rel="noopener">${t('imgSearch')}</a><br>
     ${w.link?`<a class="ext" href="${w.link}" target="_blank" rel="noopener">${t('readMore')}</a><br>`:''}
     ${w.room!=='17'?`<span class="inroom" onclick="go('room-${w.room}')">${t('inRoom',w.room)}</span>`:''}
@@ -628,7 +681,7 @@ function swipe(el,cb){ let x0=null; el.addEventListener('touchstart',e=>{ x0 = e
   el.addEventListener('touchend',e=>{ if(x0===null)return; const dx=e.changedTouches[0].clientX-x0; if(Math.abs(dx)>50) cb(dx<0?1:-1); x0=null; }); }
 
 /* ---------- routing ---------- */
-function view(v){ ['home','room','thread'].forEach(id=>$('#'+id).style.display = id===v?'block':'none'); }
+function view(v){ ['home','room','thread','glossary'].forEach(id=>$('#'+id).style.display = id===v?'block':'none'); }
 function go(h){ location.hash = h; if(!h){ route(); } }
 let curView='';
 function route(){
@@ -638,11 +691,13 @@ function route(){
   backHash=h; curView=h;
   if(h.startsWith('room-')) return showRoom(h.slice(5));
   if(h.startsWith('thread-')) return showThread(h.slice(7));
+  if(h==='glossary') return showGlossary();
   view('home'); drawPlans();
   if(h==='map'||h==='building') setTimeout(()=>document.getElementById(h).scrollIntoView(),30); else window.scrollTo(0,0);
 }
 window.addEventListener('hashchange',route);
 document.addEventListener('keydown',e=>{
+  if($('#glpop').classList.contains('open')&&e.key==='Escape'){ closeGl(); return; }
   if($('#lb').classList.contains('open')){ if(e.key==='Escape')$('#lb').classList.remove('open'); return; }
   if($('#modal').classList.contains('open')){ if(e.key==='Escape')closeWork(); if(e.key==='ArrowRight')gal(1); if(e.key==='ArrowLeft')gal(-1); return; }
   const h=location.hash.slice(1);

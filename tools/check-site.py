@@ -31,7 +31,7 @@ async def run(engine, vw, vh, lang='ru', theme='dark'):
             eng = await pg.evaluate(r'''() => { const vis=e=>e.offsetParent!==null; const bad=[];
               const root = document.querySelector('#modal.open .sbody') || [...document.querySelectorAll('main')].find(vis);
               const walk=document.createTreeWalker(root,NodeFilter.SHOW_TEXT); let n;
-              while(n=walk.nextNode()){ const p=n.parentElement; if(!vis(p)||p.closest('h4,h3,i,.chip.sm,.rel,.works,.ytbtn,.vsrc')) continue;
+              while(n=walk.nextNode()){ const p=n.parentElement; if(!vis(p)||p.closest('h4,h3,i,.chip.sm,.rel,.works,.ytbtn,.vsrc,.gl')) continue;
                 const tx=n.textContent.trim(); if(/\b(the|and|room|works?|of|with|in the|visit|photo|video)\b/i.test(tx) && !/[а-яё]/i.test(tx)) bad.push(tx.slice(0,60)); }
               return bad; }''')
             for e in eng: probs.append(f'#{h}: English text in RU: {e}')

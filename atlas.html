@@ -153,6 +153,23 @@ svg.plan{position:absolute;top:0;left:0;width:100%;height:100%;display:block;tou
 .sbody .yr{color:var(--mute)}
 .sbody .med{font-size:13px;color:var(--mute);margin:10px 0 4px;padding-left:10px;border-left:2px solid var(--line)}
 .sbody .concept{font:400 18px/1.6 Fraunces,serif;color:var(--ink)}
+.gl{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;text-decoration:underline dotted;text-decoration-color:var(--gold);text-decoration-thickness:1.5px;text-underline-offset:3px}
+.gl:hover,.gl:focus-visible{color:var(--gold)}
+.glpop{position:fixed;z-index:70;width:min(380px,calc(100vw - 24px));max-height:min(70vh,560px);overflow-y:auto;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-top:4px solid var(--gold);border-radius:14px;box-shadow:0 18px 50px rgba(0,0,0,.45);padding:16px 18px 18px;display:none}
+.glpop.open{display:block;animation:fade .15s}
+.glpop .gc{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:700}
+.glpop h4{font:700 19px/1.25 Fraunces,serif;margin:4px 30px 10px 0}
+.glpop h6{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);margin:12px 0 4px}
+.glpop p{font-size:14.5px;line-height:1.6;color:var(--text2)}
+.glpop .gx{position:absolute;top:10px;right:10px;width:34px;height:34px;border-radius:50%;font-size:20px;color:var(--mute)}
+.glpop a{display:inline-block;margin-top:12px;color:var(--gold);font-size:13px}
+@media(max-width:600px){.glpop{left:0!important;right:0;bottom:0;top:auto!important;width:100%;border-radius:18px 18px 0 0;max-height:72vh;padding-bottom:calc(18px + var(--sab))}}
+.glist{columns:2 320px;column-gap:28px;margin-top:18px}
+.glist .gitem{break-inside:avoid;padding:12px 0;border-bottom:1px solid var(--line)}
+.glist h4{font:700 17px Fraunces;margin-bottom:4px}
+.glist p{font-size:14px;color:var(--text2);line-height:1.55}
+.glist p+p{margin-top:6px}
+.glsearch{width:100%;max-width:480px;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:11px 16px;font:inherit;font-size:15px;margin:6px 0 10px}
 .voice{margin:22px 0 4px;max-width:760px;border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:14px;padding:16px 18px;background:var(--panel)}
 .voice .vk{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:8px}
 .voice blockquote{font:italic 400 20px/1.45 Fraunces,serif;color:var(--ink);margin:0 0 6px}
