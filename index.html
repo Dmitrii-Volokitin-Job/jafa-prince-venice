@@ -157,6 +157,12 @@ svg.plan{position:absolute;top:0;left:0;width:100%;height:100%;display:block;tou
 .sbody .yr{color:var(--mute)}
 .sbody .med{font-size:13px;color:var(--mute);margin:10px 0 4px;padding-left:10px;border-left:2px solid var(--line)}
 .sbody .concept{font:400 18px/1.6 Fraunces,serif;color:var(--ink)}
+.voice{margin:22px 0 4px;max-width:760px;border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:14px;padding:16px 18px;background:var(--panel)}
+.voice .vk{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:8px}
+.voice blockquote{font:italic 400 20px/1.45 Fraunces,serif;color:var(--ink);margin:0 0 6px}
+.voice .vsrc{font-size:12px;color:var(--mute);margin-bottom:10px}
+.voice p{font-size:15px;color:var(--text2);line-height:1.6}
+.voice a{color:var(--gold);font-size:13px;display:inline-block;margin-top:8px}
 .sbody .looktext{font-size:16px;line-height:1.65;color:var(--text2)}
 .sbody .bgtext{font-size:15px;line-height:1.65;color:var(--text2);border-left:2px solid var(--gold);padding-left:12px}
 .sbody h5{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin:24px 0 10px}
@@ -265,6 +271,8 @@ svg.plan{position:absolute;top:0;left:0;width:100%;height:100%;display:block;tou
     </div>
   </div>
 
+  <section><div class="wrap" id="homevoice"></div></section>
+
   <section id="map"><div class="wrap">
     <div data-i18n="planKicker" class="kicker">Floor plan</div>
     <h2 data-i18n="planTitle">Tap a room to walk in</h2>
@@ -321,13 +329,14 @@ svg.plan{position:absolute;top:0;left:0;width:100%;height:100%;display:block;tou
 <div class="lb" id="lb"><img id="lbimg" alt=""></div>
 
 <footer class="foot"><div class="wrap" data-i18n="foot">
-  A personal virtual visit made from photos and short clips taken in the exhibition on 15 November 2026. Work concepts are summaries written for this site, not the gallery's wall texts. Room 17 is imaginary: it gathers related works that are not in the show.
+  A personal virtual visit made from photos and short clips taken in the exhibition on 15 November 2026. Work descriptions are written for this site; the “Voice of the exhibition” blocks quote short lines from the wall texts and retell them. Room 17 is imaginary: it gathers related works that are not in the show.
   Exhibition: “Helter Skelter: Arthur Jafa and Richard Prince”, curated by Nancy Spector, Fondazione Prada, Ca' Corner della Regina, Venice.
 </div></footer>
 
 <script src="data.js"></script>
 <script src="i18n.js"></script>
 <script src="look.js"></script>
+<script src="voice.js"></script>
 <script>
 const H = window.HS;
 const W = Object.fromEntries(H.works.map(w=>[w.id,w]));
@@ -361,7 +370,7 @@ const EN = {
   ajText:"Filmmaker, cinematographer (<i>Daughters of the Dust</i>) and artist. He builds montage out of found images of Black American life, aiming for a Black cinema with the power and beauty of Black music. Golden Lion, Venice Biennale 2019.",
   rpYrs:"b. 1949, Panama Canal Zone · lives in New York",
   rpText:'Started rephotographing ads in 1977, working "without a licence." Cowboys, biker girlfriends, jokes, nurses and Instagram posts: he collects what American culture throws away and blows it up into art, which has led to famous court cases.',
-  foot:"A personal virtual visit made from photos and short clips taken in the exhibition on 15 November 2026. Work concepts are summaries written for this site, not the gallery's wall texts. Room 17 is imaginary: it gathers related works that are not in the show. Exhibition: “Helter Skelter: Arthur Jafa and Richard Prince”, curated by Nancy Spector, Fondazione Prada, Ca' Corner della Regina, Venice.",
+  foot:"A personal virtual visit made from photos and short clips taken in the exhibition on 15 November 2026. Work descriptions are written for this site; the “Voice of the exhibition” blocks quote short lines from the wall texts and retell them. Room 17 is imaginary: it gathers related works that are not in the show. Exhibition: “Helter Skelter: Arthur Jafa and Richard Prince”, curated by Nancy Spector, Fondazione Prada, Ca' Corner della Regina, Venice.",
   floorG:"Ground floor", floorF:"First floor", floorV:"Virtual · not in the building",
   works:n=>`${n} work${n>1?'s':''}`, prev:"← previous", next:"next →", end:"End of the visit",
   virtualNote:"Room 17 sits outside the palazzo. It's an imagined annex of works by the two artists that weren't shown in Venice, linked back to the rooms where their descendants hang.",
@@ -373,10 +382,10 @@ const EN = {
   clipBadge:"▶ my clip", ytBadge:"▶ YouTube", ytMore:"YouTube & more",
   phVideo:"▶ video", phVirtual:"◇ not in Venice", phNone:"not photographed · tap for the story", langBtn:"RU",
   nameAJ:"Arthur Jafa", nameRP:"Richard Prince",
-  concept:"Concept", look:"How to look", imgSearch:"See images of this work online ↗",
+  concept:"Concept", look:"How to look", voice:"Voice of the exhibition", vWall:n=>`Wall text, room ${n} · Fondazione Prada, curated by Nancy Spector`, vBook:"Exhibition booklet · Fondazione Prada, curated by Nancy Spector", vRetold:"In short (our summary):", vNone:"We didn't photograph the wall text in this room.", vSame:"This room is described in the courtyard text (room 1).", vMore:"Full texts on the Fondazione Prada website ↗", vTr:"", imgSearch:"See images of this work online ↗",
   pCanal:"Grand Canal", pStairs:"STAIRS", pEntrance:"ENTRANCE", p_ANDRONE:"ANDRONE", p_COURTYARD:"COURTYARD", p_PORTEGO:"PORTEGO"
 };
-const RUX = {concept:"Концепция", look:"Как смотреть", imgSearch:"Изображения работы в интернете ↗", nameAJ:"Артур Джафа", nameRP:"Ричард Принс", pCanal:"Гранд-канал", pStairs:"ЛЕСТНИЦА", pEntrance:"ВХОД", p_ANDRONE:"АНДРОНЕ", p_COURTYARD:"ДВОР", p_PORTEGO:"ПОРТЕГО"};
+const RUX = {concept:"Концепция", look:"Как смотреть", voice:"Голос выставки", vWall:n=>`Настенный текст зала ${n} · Fondazione Prada, куратор Нэнси Спектор`, vBook:"Буклет выставки · Fondazione Prada, куратор Нэнси Спектор", vRetold:"Коротко (наш пересказ):", vNone:"Текст этого зала мы не сфотографировали.", vSame:"Этот зал описан в тексте двора (зал 1).", vMore:"Полные тексты — на сайте Fondazione Prada ↗", vTr:" · перевод цитаты наш", imgSearch:"Изображения работы в интернете ↗", nameAJ:"Артур Джафа", nameRP:"Ричард Принс", pCanal:"Гранд-канал", pStairs:"ЛЕСТНИЦА", pEntrance:"ВХОД", p_ANDRONE:"АНДРОНЕ", p_COURTYARD:"ДВОР", p_PORTEGO:"ПОРТЕГО"};
 const RU = window.HS_RU;
 let LANG='ru'; try{ LANG = localStorage.getItem('hs-lang') || 'ru'; }catch(e){}
 if(window.HS_URLLANG==='en'||window.HS_URLLANG==='ru') LANG=window.HS_URLLANG;
@@ -401,6 +410,7 @@ function applyStatic(){
   if($('#themebtn')) themeIcon();
 }
 function buildHome(){
+  const hv=document.getElementById('homevoice'); if(hv) hv.innerHTML=voiceBlock('0');
   $('#facts').innerHTML = L.facts().map(f=>`<li>${esc(f)}</li>`).join('');
   $('#themechips').innerHTML = Object.entries(H.themes).map(([k,th])=>`<button class="chip" onclick="go('thread-${k}')"><i style="background:${th.color}"></i>${esc(L.theme(k))} <span style="color:var(--mute)">${H.works.filter(w=>w.themes.includes(k)).length}</span></button>`).join('');
   ['AJ','RP'].forEach(k=>{
@@ -413,6 +423,12 @@ const SKINS=[
   {id:'laguna',en:'Laguna',ru:'Лагуна',sw:'linear-gradient(135deg,#071a1f 50%,#3f8a9c 50%)'},
   {id:'terracotta',en:'Terracotta',ru:'Терракота',sw:'linear-gradient(135deg,#efe1cf 50%,#a8380f 50%)'},
   {id:'contrast',en:'High contrast',ru:'Высокий контраст',sw:'linear-gradient(135deg,#000 50%,#ffd400 50%)'}];
+function voiceBlock(id){ const V=window.HS_VOICE, v=V.rooms[id], ru=LANG==='ru';
+  let inner='';
+  if(v&&v.q_en){ inner=`<blockquote>«${esc(ru?v.q_ru:v.q_en)}»</blockquote>${ru?`<div class="vsrc" style="margin-bottom:2px">“${esc(v.q_en)}”</div>`:''}<div class="vsrc">— ${id==='0'?t('vBook'):t('vWall',id)}${t('vTr')}</div><p><b>${t('vRetold')}</b> ${esc(ru?v.s_ru:v.s_en)}</p>`; }
+  else if(v){ inner=`<p>${t('vSame')} ${esc(ru?v.s_ru:v.s_en)}</p>`; }
+  else inner=`<p>${t('vNone')}</p>`;
+  return `<div class="voice"><div class="vk">${t('voice')}</div>${inner}<a href="${V.official}" target="_blank" rel="noopener">${t('vMore')}</a></div>`; }
 function themeIcon(){ const th=document.documentElement.dataset.theme;
   $('#themebtn').title = LANG==='ru'?'Скин':'Skin';
   $('#skinmenu').innerHTML = SKINS.map(k=>`<button role="menuitem" class="${k.id===th?'on':''}" onclick="setSkin('${k.id}')"><i style="background:${k.sw}"></i>${LANG==='ru'?k.ru:k.en}</button>`).join('');
@@ -521,6 +537,7 @@ function showRoom(id){
       <div style="color:var(--mute);font-size:14px">${t('works',works.length)} · ${[...roomArtists(id)].map(k=>`<b style="color:${COL[k]}">${artistLabel(k)}</b>`).join(' & ')}</div>
     </div>
     <p class="room-intro">${esc(L.rIntro(r))}</p>
+    ${id!=='17'?voiceBlock(id):''}
     <div class="roomgrid">
       <div class="mini">${mini}</div>
       <div>
